@@ -5,7 +5,7 @@ class Game {
     this.canvas= canvas;
     this.canvasObject = this.canvas.getContext('2d');
     this.player;
-    this.playerShoot =[];
+    this.shoots =[];
     this.enemies1 = [];
     this.isGameOver = false;
     //this.contadorPush = 0;
@@ -15,8 +15,11 @@ class Game {
 
     this.player = new Player(this.canvas, 3);
 
+    
+
     const loop = () => {
 
+      
       
       this.clearCanvas ();
       this.drawCanvas ();
@@ -40,6 +43,9 @@ class Game {
   updateCanvas(){
     this.player.update();
     this.player.updateSpeed();
+    this.shoots.forEach((shoot) => {
+      shoot.update();
+    });
 
   };
 
@@ -49,6 +55,10 @@ class Game {
 
   drawCanvas(){
     this.player.draw();
+    this.canvasObject.fillStyle = 'rgb(255, 252, 156, 0.5)';
+    this.shoots.forEach((shoot) => {
+      shoot.draw();
+    });
 
   };
 

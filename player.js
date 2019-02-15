@@ -7,7 +7,7 @@ class Player {
     this.canvasObject = this.canvas.getContext('2d');
     this.x = 300 + this.size/2;
     this.y = this.canvas.height/2 - this.size;
-    this.speed = 8;
+    this.speed = 11;
     this.speed2=this.speed * 0.7;
     this.left=false;   //
     this.right=false;   //
@@ -41,8 +41,8 @@ class Player {
 
   updateSpeed () {
 
-    this.speed = 8;
-    
+    this.speed = 11;
+
     if (this.right && this.up){
       this.speed = this.speed2;
     } else if (this.left && this.up){

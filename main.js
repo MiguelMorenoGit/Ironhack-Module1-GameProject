@@ -69,6 +69,15 @@ const main = ()=>{
 
     document.addEventListener('keyup', setPlayerDirectionUp);
 
+    const setPlayerShoot = (e) => {
+      //game.contadorPush-=1;
+
+      if(e.keyCode === 32 )game.shoots.push(new PlayerShoot(game.canvas,game.player.x+50,game.player.y+20));
+        console.log(game.shoots);
+    };
+
+    document.addEventListener('keydown', setPlayerShoot);
+
     
 
     
