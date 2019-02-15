@@ -40,26 +40,38 @@ const main = ()=>{
     game.startLoop();
 
 
+
     const setPlayerDirectionDown = (event) => {
+      //game.contadorPush+=1;
 
       if(event.code === 'ArrowUp')game.player.up = true;
       if(event.code === 'ArrowDown')game.player.down = true;
       if(event.code === 'ArrowRight')game.player.right = true;
       if(event.code === 'ArrowLeft')game.player.left = true;
+
+      
  
     };
 
     document.addEventListener('keydown', setPlayerDirectionDown);
 
     const setPlayerDirectionUp = (event) => {
+      //game.contadorPush-=1;
 
       if(event.code === 'ArrowUp')game.player.up = false;
       if(event.code === 'ArrowDown')game.player.down = false;
       if(event.code === 'ArrowRight')game.player.right = false;
       if(event.code === 'ArrowLeft')game.player.left = false;  
+
+      
+
     };
 
     document.addEventListener('keyup', setPlayerDirectionUp);
+
+    
+
+    
     
 
     // const dx = 1* Math.cos(Math.toRadians(45));

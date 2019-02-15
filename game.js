@@ -8,6 +8,7 @@ class Game {
     this.playerShoot =[];
     this.enemies1 = [];
     this.isGameOver = false;
+    //this.contadorPush = 0;
   };
 
   startLoop(){
@@ -22,11 +23,13 @@ class Game {
       this.checkAllCollisions();
       this.updateCanvas();
       
-       
+      
 
       window.requestAnimationFrame(loop);
 
     };
+
+    
 
     
 
@@ -36,6 +39,7 @@ class Game {
 
   updateCanvas(){
     this.player.update();
+    this.player.updateSpeed();
 
   };
 

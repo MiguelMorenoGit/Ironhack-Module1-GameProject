@@ -8,6 +8,7 @@ class Player {
     this.x = 300 + this.size/2;
     this.y = this.canvas.height/2 - this.size;
     this.speed = 8;
+    this.speed2=this.speed * 0.7;
     this.left=false;   //
     this.right=false;   //
     this.up=false;   //
@@ -36,6 +37,24 @@ class Player {
     if (this.down) this.y = this.y + this.speed;
     
     
+  };
+
+  updateSpeed () {
+
+    this.speed = 8;
+    
+    if (this.right && this.up){
+      this.speed = this.speed2;
+    } else if (this.left && this.up){
+      this.speed = this.speed2;
+    } else if (this.left && this.down){
+      this.speed = this.speed2;
+    } else if (this.right && this.down){
+      this.speed = this.speed2 ; 
+    } else {
+      this.speed = this.speed;
+    }
+
   };
 
   draw (){
