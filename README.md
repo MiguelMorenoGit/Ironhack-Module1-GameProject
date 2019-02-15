@@ -89,18 +89,25 @@ Definicion del las transiciones del juego y del main.
 0.prepar archivos js,html y css
 
 1.Definir main.js y construir sus funciones
-
+1.1 construirlas 3 pantallas dom
+1.2 transition: conectar con un click las 3 pantallas
 
 2.definir Game.js y construir sus funciones.
-// sin constrir collissions
+2.1 construir el entorno d ejeugo
 
 3.definir Player.js y construir sus funciones
-// sin constrir collissions
+3.1 construir Player
+3.2 Movimiento Player
+// sin construir collissions
 
 4.definir playerShoot.js y construir sus funciones
-// sin constrir collissions 
+4.1 Construir playerShoot
+4.2 movimiento playerShoot
+// sin construir collissions 
 
 5.definir Enemy1.js y construir sus funciones
+5.1 Construir Enemy1
+5.2 movimiento Enemy1
 // sin constrir collissions
 
 6. definir collissions en:
