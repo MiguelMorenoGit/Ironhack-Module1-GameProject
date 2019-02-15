@@ -17,7 +17,7 @@ class Cloud {
 
   draw(){
 
-    this.canvasObject.fillStyle = 'white';
+    this.canvasObject.fillStyle = 'rgba(255,255,255,0.3)';
     this.canvasObject.fillRect(this.x,this.y - this.size/2, this.size, this.size);
 
   };

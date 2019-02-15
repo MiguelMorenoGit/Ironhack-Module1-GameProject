@@ -54,7 +54,7 @@ class Game {
     window.requestAnimationFrame(loop);
   };
 
-  velocityUp = 1000000;
+    //velocityUp = 1000000;
 
   updateCanvas(){
     this.player.update();
@@ -64,7 +64,7 @@ class Game {
     });
     this.enemies1.forEach((enemy)=>{
       enemy.update();
-      vaelo
+      
     });
     this.clouds.forEach((cloud)=>{
       cloud.update();

@@ -27,8 +27,7 @@ class Enemy1 {
     // }else if(this.y>=this.limitHeight){
     //   this.y = this.y--;
     // }
-    console.log('Now: '+this.y);
-    console.log('Max: '+this.limitHeight);
+    
 
     //this.y = Math.random()*100 - Math.random()*100 + this.y;
     if(this.isUp){
@@ -44,14 +43,11 @@ class Enemy1 {
     }
     
 
-
-    console.log(Math.random(100));
-
    };
 
   draw(){
 
-    this.canvasObject.fillStyle = 'red';
+    this.canvasObject.fillStyle = "orange";
     this.canvasObject.fillRect(this.x,this.y - this.size/2, this.size, this.size);
 
   };
