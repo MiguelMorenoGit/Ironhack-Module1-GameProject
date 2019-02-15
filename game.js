@@ -7,6 +7,7 @@ class Game {
     this.player;
     this.shoots =[];
     this.enemies1 = [];
+    this.clouds = [];
     this.isGameOver = false;
     //this.contadorPush = 0;
   };
@@ -17,7 +18,20 @@ class Game {
 
     
 
+    //const y = Math.random()*this.canvas.height;
+    //this.enemies1.push(new Enemy1(this.canvas,y));
+
     const loop = () => {
+
+      if(Math.random() > 0.98) {
+        const y = Math.random()*this.canvas.height;
+        this.enemies1.push(new Enemy1(this.canvas,y));
+      };
+
+      if(Math.random() > 0.8) {
+        const y = Math.random()*this.canvas.height;
+        this.clouds.push(new Cloud(this.canvas,y));
+      };
 
       
       
@@ -40,11 +54,20 @@ class Game {
     window.requestAnimationFrame(loop);
   };
 
+  velocityUp = 1000000;
+
   updateCanvas(){
     this.player.update();
     this.player.updateSpeed();
     this.shoots.forEach((shoot) => {
       shoot.update();
+    });
+    this.enemies1.forEach((enemy)=>{
+      enemy.update();
+      vaelo
+    });
+    this.clouds.forEach((cloud)=>{
+      cloud.update();
     });
 
   };
@@ -55,9 +78,17 @@ class Game {
 
   drawCanvas(){
     this.player.draw();
-    this.canvasObject.fillStyle = 'rgb(255, 252, 156, 0.5)';
+    this.canvasObject.fillStyle = 'rgb(255, 252, 156)';
     this.shoots.forEach((shoot) => {
       shoot.draw();
+    });
+    //this.canvasObject.fillStyle = 'green';
+    this.enemies1.forEach((enemy)=>{
+      enemy.draw();
+    });
+    //this.canvasObject.fillStyle = 'white';
+    this.clouds.forEach((cloud)=>{
+      cloud.draw();
     });
 
   };
