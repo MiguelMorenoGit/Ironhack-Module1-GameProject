@@ -17,9 +17,9 @@ class Game {
     this.player = new Player(this.canvas, 3);
 
     
-
+    
     //const y = Math.random()*this.canvas.height;
-    //this.enemies1.push(new Enemy1(this.canvas,y));
+    // this.enemies1.push(new Enemy1(this.canvas,y));
 
     const loop = () => {
 
@@ -39,16 +39,12 @@ class Game {
       this.drawCanvas ();
       this.checkAllCollisions();
       this.updateCanvas();
-      
+
       
 
       window.requestAnimationFrame(loop);
 
     };
-
-    
-
-    
 
     
     window.requestAnimationFrame(loop);
@@ -85,20 +81,63 @@ class Game {
     //this.canvasObject.fillStyle = 'green';
     this.enemies1.forEach((enemy)=>{
       enemy.draw();
+      
     });
     //this.canvasObject.fillStyle = 'white';
     this.clouds.forEach((cloud)=>{
       cloud.draw();
     });
 
+    console.log(this.enemies1);
+    console.log(this.shoots);
+    console.log(this.clouds);
+
   };
 
   checkAllCollisions(){
     this.player.checkScreen();
+    this.enemies1.forEach ((enemy, index) =>{
+      if (enemy.x - enemy.size/2 <= 0 ){
+         this.enemies1.splice(index,1);
+      };
+      if(this.player.checkCollisionEnemy(enemy)){
+        this.player.loseLive();
+        this.enemies1.splice(index,1);
+        if (this.player.lives === 0){
+          this.isGameOver = true;
+          this.onGameOver();
+          
+        }; 
+      };
+      
+      
+      this.shoots.forEach ((shoot, index) =>{
+        if (shoot.checkCollisionEnemy(enemy)){
+          this.shoots.splice(index,1);
+          this.enemies1.splice(index,1);
+        };
+      });
+      
 
+    });
+
+    this.shoots.forEach ((shoot, index) =>{
+      if (shoot.x + shoot.size/2 > this.canvas.width ){
+         this.shoots.splice(index,1);
+      };
+      
+      
+      
+    });
+
+    this.clouds.forEach ((cloud, index) =>{
+      if (cloud.x - cloud.size/2 <= 0 ){
+         this.clouds.splice(index,1);
+      };
+    });
   };
 
-  gameOverCallback(callback) {
+  gameOverCallback(callback){
     this.onGameOver = callback;
   };
 

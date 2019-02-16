@@ -72,20 +72,13 @@ const main = ()=>{
     const setPlayerShoot = (e) => {
       //game.contadorPush-=1;
 
-      if(e.keyCode === 32 )game.shoots.push(new PlayerShoot(game.canvas,game.player.x+50,game.player.y+20));
+      if(e.keyCode === 32 )game.shoots.push(new PlayerShoot(game.canvas,game.player.x+50,game.player.y));
         console.log(game.shoots);
     };
 
     document.addEventListener('keydown', setPlayerShoot);
 
     
-
-    
-    
-
-    // const dx = 1* Math.cos(Math.toRadians(45));
-    // const dy = 1* Math.sin(Math.toRadians(45));
-
   };
 
   const buildGameOverScreen = ()=> {
@@ -102,19 +95,7 @@ const main = ()=>{
   };
 
 
-
-
-
-
-
-
-
-
-
   buildSplashScreen();
-
-
-
 
 
 };

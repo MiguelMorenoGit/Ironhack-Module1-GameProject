@@ -7,7 +7,7 @@ class Player {
     this.canvasObject = this.canvas.getContext('2d');
     this.x = 300 + this.size/2;
     this.y = this.canvas.height/2 - this.size;
-    this.speed = 11;
+    this.speed = 10;
     this.speed2=this.speed * 0.7;
     this.left=false;   //
     this.right=false;   //
@@ -41,7 +41,7 @@ class Player {
 
   updateSpeed () {
 
-    this.speed = 11;
+    this.speed = 10;
 
     if (this.right && this.up){
       this.speed = this.speed2;
@@ -59,7 +59,7 @@ class Player {
 
   draw (){
     this.canvasObject.fillStyle = 'pink';
-    this.canvasObject.fillRect(this.x , this.y , this.size, this.size);
+    this.canvasObject.fillRect(this.x - this.size/2 , this.y - this.size/2 , this.size, this.size);
   };
 
   setDirection (directionX,directionY){
@@ -83,9 +83,19 @@ class Player {
 
   };
 
-  // checkCollisionEnemy (enemy) {
+  checkCollisionEnemy (enemy) {
+     const collideRight = this.x + this.size/2 > enemy.x - enemy.size/2;
+     const collideLeft = this.x - this.size/2 < enemy.x + enemy.size/2;
+     const collideTop = this.y - this.size/2 < enemy.y + enemy.size/2;
+     const collideBottom = this.y + this.size/2 > enemy.y - enemy.size/2;
 
-  // };
+     if(collideRight && collideLeft && collideTop && collideBottom){
+       return true;
+     }
+
+     return false;
+
+  };
 
   loseLive() {
     this.lives--;
