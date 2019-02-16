@@ -99,11 +99,19 @@ p {
   
 }
 
+.background{
+  width: 2400px;
+  height: 100vh;
+  
+}
+
 .game-screen {
   
-  width: 200vh;
+  width: 100%;
+  /*width: 4400px;*/
   height: 100vh;
-  background-color: rgb(130, 131, 131);
+  background-color: rgb(211, 243, 242  );
+  
 }
 
 .gameover-screen {

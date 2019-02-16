@@ -1,20 +1,24 @@
 'use strict';
 
 class Game {
-  constructor(canvas){
+  constructor(canvas,img,imgShoot){
     this.canvas= canvas;
     this.canvasObject = this.canvas.getContext('2d');
     this.player;
+    this.parallax1;
     this.shoots =[];
     this.enemies1 = [];
     this.clouds = [];
+    this.img = img;
+    this.imgShoot= imgShoot;
     this.isGameOver = false;
-    //this.contadorPush = 0;
+    
   };
 
   startLoop(){
 
     this.player = new Player(this.canvas, 3);
+    this.parallax1 = new Parallax1(this.canvas,this.img);
 
     
     
@@ -53,6 +57,7 @@ class Game {
     //velocityUp = 1000000;
 
   updateCanvas(){
+    this.parallax1.update();
     this.player.update();
     this.player.updateSpeed();
     this.shoots.forEach((shoot) => {
@@ -66,6 +71,8 @@ class Game {
       cloud.update();
     });
 
+    
+
   };
 
   clearCanvas(){
@@ -73,6 +80,7 @@ class Game {
   };
 
   drawCanvas(){
+    this.parallax1.draw();
     this.player.draw();
     this.canvasObject.fillStyle = 'rgb(255, 252, 156)';
     this.shoots.forEach((shoot) => {
@@ -87,6 +95,8 @@ class Game {
     this.clouds.forEach((cloud)=>{
       cloud.draw();
     });
+
+    
 
     console.log(this.enemies1);
     console.log(this.shoots);
