@@ -2,12 +2,12 @@
 
 class Player {
   constructor(canvas, lives){
-    this.size= 40;
+    this.size= 180;
     this.canvas = canvas;
     this.canvasObject = this.canvas.getContext('2d');
     this.x = 300 + this.size/2;
     this.y = this.canvas.height/2 - this.size;
-    this.speed = 10;
+    this.speed = 12;
     this.speed2=this.speed * 0.7;
     this.left=false;   //
     this.right=false;   //
@@ -16,6 +16,15 @@ class Player {
     this.directionX = 0;
     this.directionY = 0;
     this.lives = lives;
+    this.score = 100000;
+    this.img = imgPig;
+    // para hacer del png un gif
+    this.imgGif = imgPigGif;
+    this.imageFrame = 0;
+    this.imageSpeed = 0;
+    this.xPosition = 0;
+    this.imgAnimation ;
+
   };
 
   update(){
@@ -39,6 +48,21 @@ class Player {
     
   };
 
+  updateScore(isShoot){
+
+    if(isShoot === true){
+      this.score = this.score+100;  
+    } else {
+      this.score = this.score-20;
+      if (this.score < 0){
+        this.score = 0;
+      };
+    };
+
+    
+    
+  }
+
   updateSpeed () {
 
     this.speed = 10;
@@ -58,8 +82,21 @@ class Player {
   };
 
   draw (){
-    this.canvasObject.fillStyle = 'pink';
+    //this.imgAnimation=requestAnimationFrame(draw);
+    this.canvasObject.fillStyle = 'rgb(0,0,0,0)';
     this.canvasObject.fillRect(this.x - this.size/2 , this.y - this.size/2 , this.size, this.size);
+    // this.canvasObject.drawImage(this.imgGif, 100*this.imageFrame, 0, 170 ,120,this.x -this.size/2,this.y-this.size/2,this.size,this.size);
+    this.canvasObject.drawImage(this.imgGif,170*this.imageFrame, 0, 170 ,120,this.x -this.size/2,this.y-this.size/2,this.size+50,this.size);
+    //this.this.x += speed;
+    this.imageSpeed++;
+    if(this.imageSpeed % 2 === 0){
+      this.imageFrame++;
+    } if (this.imageFrame >9){
+      this.imageFrame = 0;
+    }
+            
+
+
   };
 
   setDirection (directionX,directionY){

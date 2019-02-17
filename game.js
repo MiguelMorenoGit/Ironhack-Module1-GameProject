@@ -1,7 +1,7 @@
 'use strict';
 
 class Game {
-  constructor(canvas,img,imgShoot){
+  constructor(canvas,scoreLabel){
     this.canvas= canvas;
     this.canvasObject = this.canvas.getContext('2d');
     this.player;
@@ -9,27 +9,28 @@ class Game {
     this.shoots =[];
     this.enemies1 = [];
     this.clouds = [];
-    this.img = img;
-    this.imgShoot= imgShoot;
     this.isGameOver = false;
+    this.scoreLabel = scoreLabel;
+    this.speedIncrease = 0.02;
+    this.speedGame = 3;
+    this.enemyIncrease = -0.0005;
+    this.enemyCount = 0.98;
     
   };
 
   startLoop(){
 
     this.player = new Player(this.canvas, 3);
-    this.parallax1 = new Parallax1(this.canvas,this.img);
+    this.parallax1 = new Parallax1(this.canvas);
 
-    
-    
     //const y = Math.random()*this.canvas.height;
     // this.enemies1.push(new Enemy1(this.canvas,y));
 
     const loop = () => {
 
-      if(Math.random() > 0.98) {
+      if(Math.random() > this.enemyCount) {
         const y = Math.random()*this.canvas.height;
-        this.enemies1.push(new Enemy1(this.canvas,y));
+        this.enemies1.push(new Enemy1(this.canvas,y,this.speedGame));
       };
 
       if(Math.random() > 0.8) {
@@ -37,24 +38,15 @@ class Game {
         this.clouds.push(new Cloud(this.canvas,y));
       };
 
-      
-      
       this.clearCanvas ();
       this.drawCanvas ();
       this.checkAllCollisions();
       this.updateCanvas();
-
-      
-
+      this.scoreLabel.innerHTML=this.player.score;
       window.requestAnimationFrame(loop);
-
     };
-
-    
     window.requestAnimationFrame(loop);
   };
-
-    //velocityUp = 1000000;
 
   updateCanvas(){
     this.parallax1.update();
@@ -70,9 +62,6 @@ class Game {
     this.clouds.forEach((cloud)=>{
       cloud.update();
     });
-
-    
-
   };
 
   clearCanvas(){
@@ -95,49 +84,43 @@ class Game {
     this.clouds.forEach((cloud)=>{
       cloud.draw();
     });
-
-    
-
-    console.log(this.enemies1);
-    console.log(this.shoots);
-    console.log(this.clouds);
-
   };
 
   checkAllCollisions(){
     this.player.checkScreen();
-    this.enemies1.forEach ((enemy, index) =>{
+    this.enemies1.forEach ((enemy, indexEnemy) =>{
       if (enemy.x - enemy.size/2 <= 0 ){
-         this.enemies1.splice(index,1);
+         this.enemies1.splice(indexEnemy,1);
+         this.player.updateScore(false);
       };
       if(this.player.checkCollisionEnemy(enemy)){
         this.player.loseLive();
-        this.enemies1.splice(index,1);
+        this.enemies1.splice(indexEnemy,1);
         if (this.player.lives === 0){
           this.isGameOver = true;
-          this.onGameOver();
-          
+          this.onGameOver(); 
         }; 
       };
-      
       
       this.shoots.forEach ((shoot, index) =>{
         if (shoot.checkCollisionEnemy(enemy)){
           this.shoots.splice(index,1);
-          this.enemies1.splice(index,1);
+          this.enemies1.splice(indexEnemy,1);
+          this.player.updateScore(true);
+          this.speedGame = this.speedGame+this.speedIncrease;
+          this.enemies1.forEach((e,indexe)=>{
+              e.updateSpeed(this.speedIncrease);            
+          });
+          this.enemyCount = this.enemyCount+this.enemyIncrease;
         };
       });
-      
-
     });
 
     this.shoots.forEach ((shoot, index) =>{
       if (shoot.x + shoot.size/2 > this.canvas.width ){
          this.shoots.splice(index,1);
       };
-      
-      
-      
+    
     });
 
     this.clouds.forEach ((cloud, index) =>{
@@ -146,18 +129,7 @@ class Game {
       };
     });
   };
-
   gameOverCallback(callback){
     this.onGameOver = callback;
   };
-
 };
-
-
-
-
-
-
-
-
-

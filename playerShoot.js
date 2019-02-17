@@ -1,15 +1,16 @@
 'use strict';
 
 class PlayerShoot {
-  constructor(canvas,x,y,imgShoot){
-    this.size=20;
+  constructor(canvas,x,y){
+    this.size=60;
     this.canvas=canvas;
     this.canvasObject = this.canvas.getContext('2d');
     this.x = x;
     this.y = y;
-    this.speed= 20;
+    this.speed= 25;
     this.direction= 1;
-    this.imgShoot=imgShoot;
+    this.img=imgShoot;
+    this.imgGif=imgShootGif;
   };
 
   update (){
@@ -19,7 +20,7 @@ class PlayerShoot {
   draw(){
     this.canvasObject.fillstyle = 'rgb(255, 252, 156)';       
     //this.canvasObject.fillRect(this.x -this.size/2, this.y-this.size/2, this.size ,this.size );
-    this.canvasObject.drawImage(this.imgShoot, this.x -this.size/2, this.y-this.size/2, this.size ,this.size);
+    this.canvasObject.drawImage(this.img, this.x -this.size/2, this.y-this.size/2, this.size*2.5 ,this.size);
 
     // ----- si lo quisiera redondo ----- 
     //this.canvasObject.fill();

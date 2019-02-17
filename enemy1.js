@@ -1,21 +1,23 @@
 'use strict';
 class Enemy1 {
-  constructor(canvas,y){
-      this.size = 50;
+  constructor(canvas,y,speed){
+      this.size = 170;
       this.canvas = canvas;
       this.canvasObject = this.canvas.getContext('2d');
       this.x = this.canvas.width;
       this.y = y;
-      this.speed = 5;//5
+      this.speed = speed;//5
       this.speedHeight = 0;//2
       this.direction = -1; 
       this.limitHeight = 50+Math.floor(Math.random()*100);
       this.isUp = true;
       this.originY = y;
+      this.img = imgEnemy1;
+      this.imgGiF = imgEnemy1Gif;
   };
 
   updateSpeed(speed){
-    this.speed = speed;
+    this.speed = speed;         
   }
 
   update (){
@@ -48,10 +50,15 @@ class Enemy1 {
   draw(){
 
     this.canvasObject.fillStyle = "orange";
-    this.canvasObject.fillRect(this.x - this.size/2 ,this.y - this.size/2, this.size, this.size);
+    //this.canvasObject.fillRect(this.x - this.size/2 ,this.y - this.size/2, this.size, this.size);
+    this.canvasObject.drawImage(this.img, this.x -this.size/2, this.y-this.size/2, this.size ,this.size);
 
   };
 
+  updateSpeed(newSpeed)
+  {
+    this.speed = this.speed+newSpeed;
+  }
   // checkScreen(){
   //   if (this.x - this.size/2 <= 0 ){
   //     this.enemies1.splice(index,1);

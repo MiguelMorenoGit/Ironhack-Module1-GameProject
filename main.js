@@ -23,30 +23,26 @@ const main = ()=>{
   const buildGameScreen = ()=>{        // -------  INICIO GAMEOVERSCREEN  -------
     const GameScreen = buildDom(`
     <section class="game-screen">
-      <canvas>
-      </canvas>
+    <div id="label" class="hub">
+        
+    </div>
+        <canvas>
+        </canvas>
     </section>
     `);
     const width = document.querySelector('.game-screen').offsetWidth;
     const height = document.querySelector('.game-screen').offsetHeight;
 
+    const scoreLabel = document.getElementById("label");
+  
     const canvasElement = document.querySelector('canvas');
 
     canvasElement.setAttribute('width',width);
     canvasElement.setAttribute('height',height);
 
-    // -------  IMAGENES  -------
+    // -------  CREAMOS EL JUEGO  -------//
 
-    const img=new Image();
-    img.src = '/images/mar.png';
-
-    const imgShoot=new Image();
-    imgShoot.src = '/images/tiro.png';
-    //img.src='https://orig15.deviantart.net/8bed/f/2015/058/a/8/smb1_background_by_steamerthesteamtrain-d8jq7ea.png';
-
-    // -------  ICREAMOS EL JUEGO  -------
-
-    const game = new Game(canvasElement,img,imgShoot);
+    const game = new Game(canvasElement,scoreLabel);
 
     game.gameOverCallback(buildGameOverScreen);
 
@@ -71,7 +67,7 @@ const main = ()=>{
     document.addEventListener('keyup', setPlayerDirectionUp);
 
     const setPlayerShoot = (e) => {
-      if(e.keyCode === 32 )game.shoots.push(new PlayerShoot(game.canvas,game.player.x+50,game.player.y,imgShoot));
+      if(e.keyCode === 32 )game.shoots.push(new PlayerShoot(game.canvas,game.player.x+120,game.player.y+50,imgShoot));
         console.log(game.shoots);
     };
     document.addEventListener('keydown', setPlayerShoot);
