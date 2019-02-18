@@ -6,7 +6,7 @@ class Cloud {
       this.canvasObject = this.canvas.getContext('2d');
       this.x = this.canvas.width;
       this.y = y;
-      this.speed = 20;
+      this.speed = 40;
       this.direction = -1;
   };
 
@@ -17,7 +17,7 @@ class Cloud {
 
   draw(){
 
-    this.canvasObject.fillStyle = 'rgb(248, 191, 79 ,0.9)';
+    this.canvasObject.fillStyle = 'orange';
     this.canvasObject.fillRect(this.x,this.y - this.size/2, this.size, this.size);
 
   };

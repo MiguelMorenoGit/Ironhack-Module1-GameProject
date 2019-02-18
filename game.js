@@ -6,6 +6,7 @@ class Game {
     this.canvasObject = this.canvas.getContext('2d');
     this.player;
     this.parallax1;
+    this.parallax2;
     this.shoots =[];
     this.enemies1 = [];
     this.clouds = [];
@@ -22,6 +23,7 @@ class Game {
   startLoop(){
 
     this.player = new Player(this.canvas, 3);
+    this.parallax2 = new Parallax2(this.canvas);
     this.parallax1 = new Parallax1(this.canvas);
 
     //const y = Math.random()*this.canvas.height;
@@ -52,6 +54,7 @@ class Game {
   };
 
   updateCanvas(){
+    this.parallax2.update();
     this.parallax1.update();
     this.player.update();
     this.player.updateSpeed();
@@ -72,6 +75,7 @@ class Game {
   };
 
   drawCanvas(){
+    this.parallax2.draw();
     this.parallax1.draw();
     this.player.draw();
     this.canvasObject.fillStyle = 'rgb(255, 252, 156)';
