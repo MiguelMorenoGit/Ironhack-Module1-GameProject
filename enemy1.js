@@ -43,6 +43,8 @@ class Enemy1 {
 
   draw(){
 
+    
+
     this.canvasObject.fillStyle = "rgb(0,0,0,0)";
     this.canvasObject.fillRect(this.x - this.size/2 ,this.y - this.size/2, this.size, this.size);
     //this.canvasObject.drawImage(this.img, this.x -this.size/2, this.y-this.size/2, this.size ,this.size);
@@ -54,6 +56,18 @@ class Enemy1 {
     } if (this.imageFrame >11){
       this.imageFrame = 0;
     }
+
+    // this.canvasObject.fillStyle = "rgb(0,0,0,0)";
+    // this.canvasObject.fillRect(this.x - this.size/2 ,this.y - this.size/2, this.size, this.size);
+    // //this.canvasObject.drawImage(this.img, this.x -this.size/2, this.y-this.size/2, this.size ,this.size);
+    // this.canvasObject.drawImage(this.imgGif, 130*this.imageFrame, 0, 130 ,130,this.x -this.size/2, this.y-this.size/2, this.size ,this.size);
+    // //this.this.x += speed;
+    // this.imageSpeed++;
+    // if(this.imageSpeed % 2 === 0){
+    //   this.imageFrame++;
+    // } if (this.imageFrame >13){
+    //   this.imageFrame = 0;
+    // }
 
   };
 

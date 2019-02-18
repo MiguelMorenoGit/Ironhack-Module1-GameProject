@@ -15,6 +15,7 @@ class Game {
     this.speedGame = 3;
     this.enemyIncrease = -0.0005;
     this.enemyCount = 0.98;
+    this.explosions = [];
     
   };
 
@@ -44,6 +45,8 @@ class Game {
       this.updateCanvas();
       this.scoreLabel.innerHTML=this.player.score;
       window.requestAnimationFrame(loop);
+
+      console.log(this.explosions);
     };
     window.requestAnimationFrame(loop);
   };
@@ -84,6 +87,13 @@ class Game {
     this.clouds.forEach((cloud)=>{
       cloud.draw();
     });
+    this.explosions.forEach((explosion,indexExplosion) =>{
+      explosion.draw(true);
+      if (explosion.draw(false)){
+        this.explosions.splice(indexExplosion,1);
+      };
+      //console.log(this.explosions);
+    })
   };
 
   checkAllCollisions(){
@@ -104,6 +114,10 @@ class Game {
       
       this.shoots.forEach ((shoot, index) =>{
         if (shoot.checkCollisionEnemy(enemy)){
+          this.explosions.push(new Explosion (this.canvas,shoot.x,shoot.y));
+          
+          //if(e.keyCode === 32 )game.shoots.push(new PlayerShoot(game.canvas,game.player.x+140,game.player.y+40));
+          
           this.shoots.splice(index,1);
           this.enemies1.splice(indexEnemy,1);
           this.player.updateScore(true);
