@@ -7,7 +7,7 @@ class Explosion {
     this.canvasObject = this.canvas.getContext('2d');
     this.x = x;
     this.y = y;
-    this.speed = 16;
+    this.speed = 12;
     this.direction = -1;
     this.img = imgExplosion;
     this.imgGif = imgExplosionGif;
@@ -33,7 +33,7 @@ class Explosion {
       this.canvasObject.drawImage(this.imgGif, 130*this.imageFrame, 0, 130 , 130, this.x -this.size/2,this.y-this.size/2,this.size,this.size);
       //this.this.x += speed;
       this.imageSpeed++;
-      if(this.imageSpeed % 6 === 0){
+      if(this.imageSpeed % 7=== 0){
         this.imageFrame++;
       } 
       if (this.imageFrame >13){
