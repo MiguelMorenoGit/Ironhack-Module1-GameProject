@@ -88,8 +88,8 @@ class Game {
       cloud.draw();
     });
     this.explosions.forEach((explosion,indexExplosion) =>{
-      explosion.draw(true);
-      if (explosion.draw(false)){
+      const isItDrawing = explosion.draw(true);
+      if (!isItDrawing){
         this.explosions.splice(indexExplosion,1);
       };
       //console.log(this.explosions);

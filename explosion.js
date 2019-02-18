@@ -35,10 +35,13 @@ class Explosion {
       this.imageSpeed++;
       if(this.imageSpeed % 6 === 0){
         this.imageFrame++;
-      } if (this.imageFrame >13){
+      } 
+      if (this.imageFrame >13){
         //his.imageFrame = 0 ;
         return false;
-      } 
+      } else {
+        return true;
+      }
 
 
 
