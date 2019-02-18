@@ -48,7 +48,7 @@ const main = ()=>{
 
     game.startLoop();
 
-    // -------  CONTROLES  -------
+    // -------  CONTROLES  -------// puedes meter todo en una funcion const setmove y hacer al final un addeventlistener(setmove que llame a todos)
     
     const setPlayerDirectionDown = (event) => {
       if(event.code === 'ArrowUp')game.player.up = true;
@@ -67,7 +67,7 @@ const main = ()=>{
     document.addEventListener('keyup', setPlayerDirectionUp);
 
     const setPlayerShoot = (e) => {
-      if(e.keyCode === 32 )game.shoots.push(new PlayerShoot(game.canvas,game.player.x+120,game.player.y+50,imgShoot));
+      if(e.keyCode === 32 )game.shoots.push(new PlayerShoot(game.canvas,game.player.x+140,game.player.y+40 ,imgShoot));
         console.log(game.shoots);
     };
     document.addEventListener('keydown', setPlayerShoot);

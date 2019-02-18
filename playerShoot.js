@@ -11,6 +11,8 @@ class PlayerShoot {
     this.direction= 1;
     this.img=imgShoot;
     this.imgGif=imgShootGif;
+    this.imageFrame = 0;
+    this.imageSpeed = 0;
   };
 
   update (){
@@ -18,15 +20,19 @@ class PlayerShoot {
   };
 
   draw(){
-    this.canvasObject.fillstyle = 'rgb(255, 252, 156)';       
-    //this.canvasObject.fillRect(this.x -this.size/2, this.y-this.size/2, this.size ,this.size );
-    this.canvasObject.drawImage(this.img, this.x -this.size/2, this.y-this.size/2, this.size*2.5 ,this.size);
+    this.canvasObject.fillStyle = "rgb(0,0,0,0)";     
+    this.canvasObject.fillRect(this.x -this.size/2, this.y-this.size/2, 200 ,60);
+    this.canvasObject.drawImage(this.imgGif,200*this.imageFrame,0,200,60, this.x -this.size/2, this.y-this.size/2, 200,60);
+    //console.log('draw');
 
-    // ----- si lo quisiera redondo ----- 
-    //this.canvasObject.fill();
-    // this.canvasObject.beginPath();
-    // this.canvasObject.arc(this.x, this.y-this.size/2,10,0,2*Math.PI, false);
-    // this.canvasObject.stroke();
+
+    //this.this.x += speed;
+    this.imageSpeed++;
+    if(this.imageSpeed % 6 === 0){
+      this.imageFrame++;
+    } if (this.imageFrame >4){
+      this.imageFrame = 0;
+    }
   };
 
   checkCollisionEnemy (enemy) {

@@ -7,13 +7,15 @@ class Enemy1 {
       this.x = this.canvas.width;
       this.y = y;
       this.speed = speed;//5
-      this.speedHeight = 0;//2
+      this.speedHeight = 2;//2
       this.direction = -1; 
       this.limitHeight = 50+Math.floor(Math.random()*100);
       this.isUp = true;
       this.originY = y;
       this.img = imgEnemy1;
-      this.imgGiF = imgEnemy1Gif;
+      this.imgGif = imgEnemy1Gif;
+      this.imageFrame = 0;
+      this.imageSpeed = 0;
   };
 
   updateSpeed(speed){
@@ -23,15 +25,7 @@ class Enemy1 {
   update (){
     this.x = this.x + this.direction * this.speed;
 
-    
-    // if (this.y < this.limitHeight){
-    //   this.y = this.y++;
-    // }else if(this.y>=this.limitHeight){
-    //   this.y = this.y--;
-    // }
-    
-
-    //this.y = Math.random()*100 - Math.random()*100 + this.y;
+  
     if(this.isUp){
       this.y = this.y-this.speedHeight;
       if(this.y < this.originY-this.limitHeight){
@@ -49,9 +43,17 @@ class Enemy1 {
 
   draw(){
 
-    this.canvasObject.fillStyle = "orange";
-    //this.canvasObject.fillRect(this.x - this.size/2 ,this.y - this.size/2, this.size, this.size);
-    this.canvasObject.drawImage(this.img, this.x -this.size/2, this.y-this.size/2, this.size ,this.size);
+    this.canvasObject.fillStyle = "rgb(0,0,0,0)";
+    this.canvasObject.fillRect(this.x - this.size/2 ,this.y - this.size/2, this.size, this.size);
+    //this.canvasObject.drawImage(this.img, this.x -this.size/2, this.y-this.size/2, this.size ,this.size);
+    this.canvasObject.drawImage(this.imgGif, 100*this.imageFrame, 0, 100 ,150,this.x -this.size/2, this.y-this.size/2, this.size ,this.size);
+    //this.this.x += speed;
+    this.imageSpeed++;
+    if(this.imageSpeed % 3 === 0){
+      this.imageFrame++;
+    } if (this.imageFrame >11){
+      this.imageFrame = 0;
+    }
 
   };
 

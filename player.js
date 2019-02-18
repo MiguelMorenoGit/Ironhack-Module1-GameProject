@@ -13,8 +13,8 @@ class Player {
     this.right=false;   //
     this.up=false;   //
     this.down=false;
-    this.directionX = 0;
-    this.directionY = 0;
+    // this.directionX = 0;
+    // this.directionY = 0;
     this.lives = lives;
     this.score = 100000;
     this.img = imgPig;
@@ -22,8 +22,8 @@ class Player {
     this.imgGif = imgPigGif;
     this.imageFrame = 0;
     this.imageSpeed = 0;
-    this.xPosition = 0;
-    this.imgAnimation ;
+    // this.xPosition = 0;
+    // this.imgAnimation ;
 
   };
 
@@ -93,7 +93,7 @@ class Player {
       this.imageFrame++;
     } if (this.imageFrame >9){
       this.imageFrame = 0;
-    }
+    } 
             
 
 
