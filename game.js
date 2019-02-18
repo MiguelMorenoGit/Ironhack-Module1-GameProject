@@ -68,6 +68,9 @@ class Game {
     this.clouds.forEach((cloud)=>{
       cloud.update();
     });
+    this.explosions.forEach((explosion)=>{
+      explosion.update();
+    });
   };
 
   clearCanvas(){

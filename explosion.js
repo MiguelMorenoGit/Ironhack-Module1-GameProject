@@ -7,8 +7,8 @@ class Explosion {
     this.canvasObject = this.canvas.getContext('2d');
     this.x = x;
     this.y = y;
-    this.speed = 1;
-    this.direction = 0;
+    this.speed = 16;
+    this.direction = -1;
     this.img = imgExplosion;
     this.imgGif = imgExplosionGif;
     this.imageFrame = 0;
