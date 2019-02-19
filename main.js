@@ -11,20 +11,31 @@ const main = ()=>{
   const buildSplashScreen = ()=>{       // -------  INICIO SPLASHSCREEN  -------
     const splashScreen = buildDom(`
     <section class="splash-screen">
-     <h1>Oh my GRADIUS</h1>
-     <canvas></canvas>
-     <button>start</button>
+     <img class="name" src="./images/NOMBRE_1.png" alt="name-game">
+     <button>START</button>
+     <canvas class= background-spash></canvas>
     </section>
     `);
     const startButton = document.querySelector('button');
-    startButton.addEventListener('click',buildGameScreen)
+    startButton.addEventListener('click',buildGameScreen);
+
+    const width = document.querySelector('.splash-screen').offsetWidth;
+    const height = document.querySelector('.splash-screen').offsetHeight;
+
+    const canvasElement = document.querySelector('canvas');
+
+    canvasElement.setAttribute('width',width);
+    canvasElement.setAttribute('height',height);
+    const background = new Background(canvasElement);
+    background.startLoop();
+
+
   };
     
   const buildGameScreen = ()=>{        // -------  INICIO GAMEOVERSCREEN  -------
     const GameScreen = buildDom(`
     <section class="game-screen">
-    <div id="label" class="hub">
-        
+    <div id="label" class="hub">    
     </div>
         <canvas>
         </canvas>
