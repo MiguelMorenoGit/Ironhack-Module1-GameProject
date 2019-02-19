@@ -141,7 +141,7 @@ p {
 
 .splash-screen .name {
 
-  animation: name 3s infinite;
+  animation: name 0.5s infinite;
   z-index: 100;
 }
 
