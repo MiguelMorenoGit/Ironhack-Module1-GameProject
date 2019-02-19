@@ -1,4 +1,4 @@
-  
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
 /* ---- reset ---- */
 
 html {
@@ -76,7 +76,7 @@ p {
 
 .button {
   width: 100%;
-  c
+  
 }
 
 .button-alt {
@@ -141,19 +141,23 @@ p {
 
 .splash-screen .name {
 
-  animation: name 0.5s infinite;
+  width: 80%;
+  height:auto;
+  animation: name 3s infinite;
   z-index: 100;
 }
 
 .splash-screen button {
 
-  
+  animation: name 0.5s infinite;  
   z-index: 100;
-  font-size: 4em;
-  color:rgb(159,163,227);
+  width: 30%;
+  font-size: 1.5em;
+  font-family: 'Press Start 2P', cursive;
+  color:rgb(53, 54, 73);
   padding: 1% 4%;
-  background-color:rgb(255,186,186,0.8);
-  border: 1px solid rgb(255,162,162);
+  background-color:rgba(231, 210, 210, 0.4);
+  border: 5px solid rgb(255, 3, 234);
   border-radius: 40px;
   
 }

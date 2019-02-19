@@ -17,6 +17,15 @@ const imgExplosionGif = new Image();imgExplosionGif.src = './images/explosion/ex
 const imgMar = new Image();imgMar.src = './images/mar3.png';
 const imgCity = new Image();imgCity.src = './images/fondo ciudad3.png';
 
+///////////  AUDIOS  /////////////
+
+const audioLaser = new Audio("/sonidos/laser.mp3");
+
+
+
+
+
+
 
 
 

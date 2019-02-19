@@ -13,6 +13,7 @@ class PlayerShoot {
     this.imgGif=imgShootGif;
     this.imageFrame = 0;
     this.imageSpeed = 0;
+    this.audio=audioLaser;
   };
 
   update (){
@@ -20,6 +21,8 @@ class PlayerShoot {
   };
 
   draw(){
+    // this.audio.currentTime =0;---no se si va aqui o ene l game
+    // this.audio.play();
     this.canvasObject.fillStyle = "rgb(0,0,0,0)";     
     this.canvasObject.fillRect(this.x -this.size/2, this.y-this.size/2, 200 ,60);
     this.canvasObject.drawImage(this.imgGif,200*this.imageFrame,0,200,60, this.x -this.size/2, this.y-this.size/2, 200,60);
@@ -33,6 +36,8 @@ class PlayerShoot {
     } if (this.imageFrame >4){
       this.imageFrame = 0;
     }
+
+    
   };
 
   checkCollisionEnemy (enemy) {

@@ -37,7 +37,7 @@ class Explosion {
         this.imageFrame++;
       } 
       if (this.imageFrame >13){
-        //his.imageFrame = 0 ;
+        //this.imageFrame = 0 ;
         return false;
       } else {
         return true;

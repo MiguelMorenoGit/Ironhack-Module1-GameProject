@@ -10,13 +10,14 @@ class Game {
     this.shoots =[];
     this.enemies1 = [];
     this.clouds = [];
+    this.explosions = [];
     this.isGameOver = false;
     this.scoreLabel = scoreLabel;
     this.speedIncrease = 0.02;
     this.speedGame = 3;
     this.enemyIncrease = -0.0005;
     this.enemyCount = 0.98;
-    this.explosions = [];
+    
     
   };
 
@@ -83,6 +84,8 @@ class Game {
     this.player.draw();
     this.canvasObject.fillStyle = 'rgb(255, 252, 156)';
     this.shoots.forEach((shoot) => {
+      // shoot.audio.currentTime =0;    -------arreglar sonido miercoles
+      // shoot.audio.play();
       shoot.draw();
     });
     //this.canvasObject.fillStyle = 'green';

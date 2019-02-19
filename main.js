@@ -12,7 +12,7 @@ const main = ()=>{
     const splashScreen = buildDom(`
     <section class="splash-screen">
      <img class="name" src="./images/NOMBRE_1.png" alt="name-game">
-     <button>START</button>
+     <button>Press for Play</button>
      <canvas class= background-spash></canvas>
     </section>
     `);
@@ -79,7 +79,9 @@ const main = ()=>{
 
     const setPlayerShoot = (e) => {
       if(e.keyCode === 32 )game.shoots.push(new PlayerShoot(game.canvas,game.player.x+140,game.player.y+40));
+      
         console.log(game.shoots);
+
     };
     document.addEventListener('keydown', setPlayerShoot);
 

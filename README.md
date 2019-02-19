@@ -1,5 +1,5 @@
 # Nombre del Proyecto
-oh my Gradius!
+PIG radius wars
 ## Descripción
  Arcade de naves donde podras enfrentarte a una horda de enemigos que no dejaran de atacarte.
  Para poder sobrevivir deberas esquivar a los enemigos y sus ataques haciendo uso de tu capacidad para moverte en 8 direcciones diferentes, y destruir al enemigo con una potente rafaga de disparos. 

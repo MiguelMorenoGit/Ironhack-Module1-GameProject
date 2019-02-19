@@ -36,7 +36,6 @@ class Background {
   updateCanvas(){
     this.parallax2.update();
     this.parallax1.update();
-    this.player.update();
     this.clouds.forEach((cloud)=>{
       cloud.update();
     });
@@ -50,7 +49,6 @@ class Background {
   drawCanvas(){
     this.parallax2.draw();
     this.parallax1.draw();
-    this.player.draw();
     //this.canvasObject.fillStyle = 'rgb(255, 252, 156)';
     this.clouds.forEach((cloud)=>{
       cloud.draw();
@@ -58,7 +56,6 @@ class Background {
   };
 
   checkAllCollisions(){
-    this.player.checkScreen();
     this.clouds.forEach ((cloud, index) =>{
       if (cloud.x - cloud.size/2 <= 0 ){
          this.clouds.splice(index,1);
