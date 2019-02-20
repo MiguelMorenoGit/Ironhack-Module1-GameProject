@@ -1,7 +1,7 @@
 'use strict';
 
 class Game {
-  constructor(canvas,scoreLabel,playerLives){
+  constructor(canvas,callbackScore,playerLives){
     this.canvas= canvas;
     this.canvasObject = this.canvas.getContext('2d');
     this.player;
@@ -14,7 +14,7 @@ class Game {
     this.clouds = [];
     this.explosions = [];
     this.isGameOver = false;
-    this.scoreLabel = scoreLabel;
+    this.updateScoreInMain = callbackScore;
     this.speedIncrease = 0.02;
     this.speedGame = 3;
     this.enemyIncrease = -0.0005;
@@ -48,7 +48,7 @@ class Game {
       this.drawCanvas ();
       this.checkAllCollisions();
       this.updateCanvas();
-      this.scoreLabel.innerHTML="  Your score :  " + this.player.score;
+      this.updateScoreInMain(this.player.score);
       this.playerLives.innerHTML="  Your lives :  " + this.player.lives;
       window.requestAnimationFrame(loop);
     };
@@ -118,15 +118,13 @@ class Game {
         this.enemies1.splice(indexEnemy,1);
         if (this.player.lives === 0){
           this.isGameOver = true;
-          this.onGameOver(); 
+          this.onGameOver(this.player.score); 
         }; 
       };
       
       this.shoots.forEach ((shoot, index) =>{
         if (shoot.checkCollisionEnemy(enemy)){
           this.explosions.push(new Explosion (this.canvas,shoot.x,shoot.y));
-          
-          //if(e.keyCode === 32 )game.shoots.push(new PlayerShoot(game.canvas,game.player.x+140,game.player.y+40));
           
           this.shoots.splice(index,1);
           this.enemies1.splice(indexEnemy,1);

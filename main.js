@@ -32,6 +32,8 @@ const main = ()=>{
 
 
   };
+
+  
     
   const buildGameScreen = ()=>{        // -------  INICIO GAMEOVERSCREEN  -------
     const GameScreen = buildDom(`
@@ -54,11 +56,19 @@ const main = ()=>{
     canvasElement.setAttribute('width',width);
     canvasElement.setAttribute('height',height);
 
+
+    const updateScore = (score) => {
+      scoreLabel.innerHTML = "  Your score :  " + score;
+    }
+
     // -------  CREAMOS EL JUEGO  -------//
 
-    const game = new Game(canvasElement,scoreLabel,playerLives);
-    game.gameOverCallback(buildGameOverScreen);
+    const game = new Game(canvasElement,updateScore,playerLives);
+    game.gameOverCallback( (score) => {
+      buildGameOverScreen(score);
+    });
     game.startLoop();
+    
 
     // -------  CONTROLES  -------// puedes meter todo en una funcion const setmove y hacer al final un addeventlistener(setmove que llame a todos)
     
@@ -79,23 +89,35 @@ const main = ()=>{
     document.addEventListener('keyup', setPlayerDirectionUp);
 
     const setPlayerShoot = (e) => {
-      if(e.keyCode === 32 )game.shoots.push(new PlayerShoot(game.canvas,game.player.x+140,game.player.y+40));
-      
-        console.log(game.shoots);
-
+      if(e.keyCode === 32 ){
+        game.shoots.push(new PlayerShoot(game.canvas,game.player.x+140,game.player.y+40));
+        
+      }
+        //console.log(game.shoots);
     };
     document.addEventListener('keydown', setPlayerShoot);
 
+    const setSoundShoot = (e) =>{
+      if(e.keyCode === 32){
+        audioLaser.currentTime =0;
+        audioLaser.play();
+      }
+    };
+    document.addEventListener('keydown', setSoundShoot);
+
     
-  };      // -------  FINAL GAMESCREEN  -------
+  };   // -------  FINAL GAMESCREEN  -------
+
+  //const finalScore= scoreLabel;
 
     
 
-  const buildGameOverScreen = ()=> {     // -------  INICIO GAMEOVERSCREEN  -------
+  const buildGameOverScreen = (score)=> {  // -------  INICIO GAMEOVERSCREEN  -------
     const GameOverScreen = buildDom(`
     <section class="gameover-screen">
       <h1>Good job!!</h1>
-      <h3>Your score was:</h3>
+      <h3 class="final-score">Your score was :</h3>
+
       <canvas class="background-gameover"></canvas>
       <div class="end-buttons">
         <button class="try-again">Try again!</button>
@@ -103,6 +125,9 @@ const main = ()=>{
       </div>
     </section>
     `);
+
+    const Score = document.querySelector('.final-score');
+    Score.innerHTML = "Your score is : " + score;
 
     const startButton = document.querySelector('.restart');
     startButton.addEventListener('click',buildSplashScreen);

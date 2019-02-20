@@ -36,8 +36,6 @@ class PlayerShoot {
     } if (this.imageFrame >4){
       this.imageFrame = 0;
     }
-
-    
   };
 
   checkCollisionEnemy (enemy) {

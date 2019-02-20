@@ -20,7 +20,7 @@ const imgKeyboard = new Image();imgKeyboard.src = './images/keyboard.png';
 
 ///////////  AUDIOS  /////////////
 
-const audioLaser = new Audio("/sonidos/laser.mp3");
+const audioLaser = new Audio("/sonidos/laser2.wav");
 
 
 

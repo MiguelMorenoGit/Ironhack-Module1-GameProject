@@ -249,7 +249,7 @@ button:hover {
 
 }
 .gameover-screen h3{
-  animation: fadeInDownBig 1s ;
+  animation: fadeInDownBig 2s ;
   z-index: 100;
   color:yellow;
   font-family: 'Press Start 2P', cursive;
@@ -258,7 +258,7 @@ button:hover {
 }
 
 .gameover-screen .end-buttons{
-  animation: fadeInDownBig 5s ;
+  animation: fadeInDownBig 3s ;
   display:flex;
   width:80%;
   flex-direction:row; 
