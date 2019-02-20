@@ -8,6 +8,8 @@ const main = ()=>{
     return main;
   };
 
+  
+
   const buildSplashScreen = ()=>{       // -------  INICIO SPLASHSCREEN  -------
     const splashScreen = buildDom(`
     <section class="splash-screen">

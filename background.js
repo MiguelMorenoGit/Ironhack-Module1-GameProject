@@ -9,12 +9,16 @@ class Background {
     this.parallax2;
     this.clouds = [];
     this.speedGame = 3;
+    
   };
 
   startLoop(){
 
     this.parallax2 = new Parallax2(this.canvas);
     this.parallax1 = new Parallax1(this.canvas);
+    gameSound.currentTime =0;
+    gameSound.play();
+    gameSound.volume = 0.2;
 
     const loop = () => {
 
