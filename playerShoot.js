@@ -13,7 +13,7 @@ class PlayerShoot {
     this.imgGif=imgShootGif;
     this.imageFrame = 0;
     this.imageSpeed = 0;
-    this.audio=audioLaser;
+    
     var laserSound = new Audio("./sonidos/laser.mp3");
     laserSound.play();
   };
@@ -54,16 +54,6 @@ class PlayerShoot {
 
   };
 
-
-
-
 }
-
-
-
-
-
-
-
 
 debugger;

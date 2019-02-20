@@ -44,8 +44,6 @@ class Player {
     if (this.left) this.x = this.x - this.speed;
     if (this.up) this.y = this.y - this.speed;
     if (this.down) this.y = this.y + this.speed;
-    
-    
   };
 
   updateScore(isShoot){
@@ -58,7 +56,6 @@ class Player {
         this.score = 0;
       };
     };
-    
   };
 
   updateSpeed () {
@@ -76,25 +73,18 @@ class Player {
     } else {
       this.speed = this.speed;
     }
-
   };
 
   draw (){
-    //this.imgAnimation=requestAnimationFrame(draw);
     this.canvasObject.fillStyle = 'rgb(0,0,0,0)';
     this.canvasObject.fillRect(this.x - this.size/2 , this.y - this.size/2 , this.size, this.size);
-    // this.canvasObject.drawImage(this.imgGif, 100*this.imageFrame, 0, 170 ,120,this.x -this.size/2,this.y-this.size/2,this.size,this.size);
     this.canvasObject.drawImage(this.imgGif,170*this.imageFrame, 0, 170 ,120,this.x -this.size/2,this.y-this.size/2,this.size+50,this.size);
-    //this.this.x += speed;
     this.imageSpeed++;
     if(this.imageSpeed % 2 === 0){
       this.imageFrame++;
     } if (this.imageFrame >9){
       this.imageFrame = 0;
     } 
-            
-
-
   };
 
   setDirection (directionX,directionY){
@@ -106,16 +96,14 @@ class Player {
 
     if (this.x <= 0){
       this.left = false;
-    } else if (this.x - this.size>= this.canvas.width* 0.6){ // 0.7 para que la nave no vaya al final
+    } else if (this.x - this.size*2>= this.canvas.width* 0.6){ // 0.7 para que la nave no vaya al final
       this.right = false;
     }
     if (this.y <= 0){ // contacto arriba
       this.up = false;
-    } else if ( this.y + this.size >= this.canvas.height ){ // contacto abajo
+    } else if ( this.y + this.size/2.5 >= this.canvas.height ){ // contacto abajo
       this.down = false;
     }
- 
-
   };
 
   checkCollisionEnemy (enemy) {
@@ -126,9 +114,8 @@ class Player {
 
      if(collideRight && collideLeft && collideTop && collideBottom){
        return true;
-     }
-
-     return false;
+      }
+       return false;
 
   };
 
