@@ -23,11 +23,6 @@ body {
   line-height: 147%;
 }
 
-h1 {}
-
-h2 {}
-
-h3 {}
 
 p {
   margin: 0;
@@ -69,42 +64,8 @@ p {
   }
 }  */
 
-
-
-
-/* ---- components ---- */
-
-.button {
-  width: 100%;
-  
-}
-
-.button-alt {
-  color: blue;
-  background-color: #fff;
-}
-
-/* ---- section ---- */
-
-
-.splash-screen {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100vh;
-  /*margin: -20px 0 0 0; */
-}
-/* .splash-screen h1{
-
-
-  display :flex;
-  z-index: 100;
-  font-size: 10em;
-  color: pink;
-} */
-
+/* ---- animations ---- */
+/* ANIMATION PULSE */
 @-webkit-keyframes name {
   from {
     -webkit-transform: scale3d(1, 1, 1);
@@ -139,6 +100,75 @@ p {
   }
 }
 
+
+
+@-webkit-keyframes fadeInDownBig {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -2000px, 0);
+    transform: translate3d(0, -2000px, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeInDownBig {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -2000px, 0);
+    transform: translate3d(0, -2000px, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* ANIMATION FADEINDOWN */
+/* ---- end animations ---- */
+
+
+/* ---- components ---- */
+
+button {
+  
+  animation: name 0.5s infinite;  
+  z-index: 100;
+  font-size: 1vw;
+  font-family: 'Press Start 2P', cursive;
+  color:rgb(53, 54, 73);
+  padding: 2% 4%;
+  background-color:rgba(231, 210, 210, 0.4);
+  border: 5px solid rgb(255, 3, 234);
+  border-radius: 40px;  
+}
+button:hover {
+  animation: name 0.2s infinite;  
+  background-color:rgba(236, 248, 167, 0.4);
+  border: 5px solid rgb(220, 253, 32);
+}
+
+
+/* ---- section ---- */
+
+
+.splash-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  /*margin: -20px 0 0 0; */
+}
+    
+
 .splash-screen .name {
 
   width: 80%;
@@ -146,68 +176,100 @@ p {
   animation: name 3s infinite;
   z-index: 100;
 }
+.splash-screen .keyboard {
+
+  
+  width: 35%;
+  height:auto;
+  z-index: 150;
+}
 
 .splash-screen button {
-
-  animation: name 0.5s infinite;  
-  z-index: 100;
-  width: 30%;
+  width: 35%;
   font-size: 1.5em;
-  font-family: 'Press Start 2P', cursive;
-  color:rgb(53, 54, 73);
-  padding: 1% 4%;
-  background-color:rgba(231, 210, 210, 0.4);
-  border: 5px solid rgb(255, 3, 234);
-  border-radius: 40px;
+  padding: 1% 2%;
   
 }
   
-
-
-
-
-.background-spash{
+.background-splash{
   position:absolute;
   z-index: 0;
 }
 
-.background{
-  width: 2400px;
+.game-screen {
+  width: 100%;
   height: 100vh;
-  margin: -20px 0 0 0;
+  /* background-color: rgb(211, 243, 242  ); */
+}
+#hub {
+  position:absolute;
+  /* width:20vw;
+  height:10vh; */
+  z-index: 1000;
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin: 5vh 0 0 3vw;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1vw;
+
 }
 
-.game-screen {
+.score{
+  color: white;
+  background-color: rgb(255, 3, 234, 0.2);
   
-  width: 100%;
-  /*width: 4400px;*/
-  height: 100vh;
-  /*margin: -20px 0 0 0;*/
-  background-color: rgb(211, 243, 242  );
+}
+.live{
+  color: white;
+  background-color: rgb(255, 3, 234, 0.2);
   
+}
+.background-gameover{
+  position:absolute;
+  z-index: 0;
 }
 
 .gameover-screen {
-  
-  width: 200vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
   height: 100vh;
-  margin: -20px 0 0 0;
-  background-color: rgb(136, 113, 78);
 }
 
-#label {
+.gameover-screen h1{
+  animation: fadeInDownBig 1s ;
+  z-index: 100;
+  color:orangered;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 5vw;
+  
 
- font-size: 20px;
- z-index: 1000;
+}
+.gameover-screen h3{
+  animation: fadeInDownBig 1s ;
+  z-index: 100;
+  color:yellow;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 2vw;
+
 }
 
-.hub{
-  position:absolute;
-  z-index: 1000;
-  color: white;
-  background-color: black;
-  margin: 20px 0 0 0;
+.gameover-screen .end-buttons{
+  animation: fadeInDownBig 5s ;
+  display:flex;
+  width:80%;
+  flex-direction:row; 
+  /* align-items: center; */
+  justify-content: space-evenly;
+  margin-bottom:1px; 
+
 }
+
+
+
 
 
 

@@ -12,8 +12,9 @@ const main = ()=>{
     const splashScreen = buildDom(`
     <section class="splash-screen">
      <img class="name" src="./images/NOMBRE_1.png" alt="name-game">
+     <img class="keyboard" src="./images/keyboard.png">
      <button>Press for Play</button>
-     <canvas class= background-spash></canvas>
+     <canvas class="background-splash"></canvas>
     </section>
     `);
     const startButton = document.querySelector('button');
@@ -35,17 +36,19 @@ const main = ()=>{
   const buildGameScreen = ()=>{        // -------  INICIO GAMEOVERSCREEN  -------
     const GameScreen = buildDom(`
     <section class="game-screen">
-    <div id="label" class="hub">    
+    <div id="hub">
+      <h3 class="score"></h3>
+      <h3 class="live"></h3>
     </div>
-        <canvas>
-        </canvas>
+    <canvas>
+    </canvas>
     </section>
     `);
     const width = document.querySelector('.game-screen').offsetWidth;
     const height = document.querySelector('.game-screen').offsetHeight;
 
-    const scoreLabel = document.getElementById("label");
-  
+    const scoreLabel = document.querySelector(".score");
+    const playerLives = document.querySelector(".live");
     const canvasElement = document.querySelector('canvas');
 
     canvasElement.setAttribute('width',width);
@@ -53,10 +56,8 @@ const main = ()=>{
 
     // -------  CREAMOS EL JUEGO  -------//
 
-    const game = new Game(canvasElement,scoreLabel);
-
+    const game = new Game(canvasElement,scoreLabel,playerLives);
     game.gameOverCallback(buildGameOverScreen);
-
     game.startLoop();
 
     // -------  CONTROLES  -------// puedes meter todo en una funcion const setmove y hacer al final un addeventlistener(setmove que llame a todos)
@@ -93,14 +94,31 @@ const main = ()=>{
   const buildGameOverScreen = ()=> {     // -------  INICIO GAMEOVERSCREEN  -------
     const GameOverScreen = buildDom(`
     <section class="gameover-screen">
-      <h1>Game Over Loser</h1>
-      <canvas></canvas>
-      <button>start</button>
+      <h1>Good job!!</h1>
+      <h3>Your score was:</h3>
+      <canvas class="background-gameover"></canvas>
+      <div class="end-buttons">
+        <button class="try-again">Try again!</button>
+        <button class="restart">Restart</button>
+      </div>
     </section>
     `);
 
-    const startButton = document.querySelector('button');
+    const startButton = document.querySelector('.restart');
     startButton.addEventListener('click',buildSplashScreen);
+
+    const tryAgainButton = document.querySelector('.try-again');
+    tryAgainButton.addEventListener('click',buildGameScreen);
+
+    const width = document.querySelector('.gameover-screen').offsetWidth;
+    const height = document.querySelector('.gameover-screen').offsetHeight;
+
+    const canvasElement = document.querySelector('canvas');
+
+    canvasElement.setAttribute('width',width);
+    canvasElement.setAttribute('height',height);
+    const background = new Background(canvasElement);
+    background.startLoop();
 
   };  // -------  FINAL GAMEOVERSCREEN  -------
     

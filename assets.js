@@ -16,6 +16,7 @@ const imgExplosion = new Image();imgExplosion.src = './images/explosion/prueba.p
 const imgExplosionGif = new Image();imgExplosionGif.src = './images/explosion/explision_130_130_14.png';
 const imgMar = new Image();imgMar.src = './images/mar3.png';
 const imgCity = new Image();imgCity.src = './images/fondo ciudad3.png';
+const imgKeyboard = new Image();imgKeyboard.src = './images/keyboard.png';
 
 ///////////  AUDIOS  /////////////
 

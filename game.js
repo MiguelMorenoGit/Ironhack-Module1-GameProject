@@ -1,10 +1,12 @@
 'use strict';
 
 class Game {
-  constructor(canvas,scoreLabel){
+  constructor(canvas,scoreLabel,playerLives){
     this.canvas= canvas;
     this.canvasObject = this.canvas.getContext('2d');
     this.player;
+    //this.playerNewLives = playerLives;
+    this.playerLives=playerLives;
     this.parallax1;
     this.parallax2;
     this.shoots =[];
@@ -46,10 +48,9 @@ class Game {
       this.drawCanvas ();
       this.checkAllCollisions();
       this.updateCanvas();
-      this.scoreLabel.innerHTML=this.player.score;
+      this.scoreLabel.innerHTML="  Your score :  " + this.player.score;
+      this.playerLives.innerHTML="  Your lives :  " + this.player.lives;
       window.requestAnimationFrame(loop);
-
-      console.log(this.explosions);
     };
     window.requestAnimationFrame(loop);
   };
@@ -88,22 +89,21 @@ class Game {
       // shoot.audio.play();
       shoot.draw();
     });
-    //this.canvasObject.fillStyle = 'green';
+    ;
     this.enemies1.forEach((enemy)=>{
-      enemy.draw();
-      
+      enemy.draw(); 
     });
-    //this.canvasObject.fillStyle = 'white';
+
     this.clouds.forEach((cloud)=>{
       cloud.draw();
     });
+
     this.explosions.forEach((explosion,indexExplosion) =>{
       const isItDrawing = explosion.draw(true);
       if (!isItDrawing){
         this.explosions.splice(indexExplosion,1);
       };
-      //console.log(this.explosions);
-    })
+    });
   };
 
   checkAllCollisions(){
