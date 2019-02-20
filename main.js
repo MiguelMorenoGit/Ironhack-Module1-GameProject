@@ -46,6 +46,9 @@ const main = ()=>{
     </div>
     <canvas>
     </canvas>
+    <audio volume="0.01" autoplay  loop>
+      <source src="./sonidos/D1 - Go Straight (Original Version)-[AudioTrimmer.com].mp3">
+    <audio>
     </section>
     `);
     const width = document.querySelector('.game-screen').offsetWidth;
@@ -103,6 +106,7 @@ const main = ()=>{
       if(e.keyCode === 32){
         audioLaser.currentTime =0;
         audioLaser.play();
+        audioLaser.volume =3;
       }
     };
     document.addEventListener('keydown', setSoundShoot);

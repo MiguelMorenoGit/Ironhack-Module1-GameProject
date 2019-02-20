@@ -19,17 +19,22 @@ class Game {
     this.speedGame = 3;
     this.enemyIncrease = -0.0005;
     this.enemyCount = 0.98;
+    // this.gameSound= new Audio ("./sonidos/D1 - Go Straight (Original Version)-[AudioTrimmer.com].mp3");
+    // this.windSound = new Audio ("./sonidos/viento_en_un_canaveral_de_un_parque_1.mp3");
+    this.enemySound = new Audio ("./sonidos/wreee.mp3");
     
     
   };
 
   startLoop(){
+    
 
     this.player = new Player(this.canvas, 3);
     this.parallax2 = new Parallax2(this.canvas);
     this.parallax1 = new Parallax1(this.canvas);
-    gameSound.currentTime =0;gameSound.play();gameSound.volume = 0.2;
-    windSound.currentTime =0;windSound.play();windSound.volume = 0.1;
+    // this.gameSound.currentTime =0;this.gameSound.play();this.gameSound.volume = 0.2;
+    // this.windSound.currentTime =0;this.windSound.play();this.windSound.volume = 0.1;
+    
     
 
     //const y = Math.random()*this.canvas.height;
@@ -55,7 +60,10 @@ class Game {
       this.playerLives.innerHTML="  Your lives :  " + this.player.lives;
       window.requestAnimationFrame(loop);
     };
+    
     window.requestAnimationFrame(loop);
+    
+    
   };
 
   updateCanvas(){
@@ -80,6 +88,7 @@ class Game {
 
   clearCanvas(){
     this.canvasObject.clearRect(0,0,this.canvas.width,this.canvas.height);
+    
   };
 
 
@@ -89,8 +98,6 @@ class Game {
     this.player.draw();
     this.canvasObject.fillStyle = 'rgb(255, 252, 156)';
     this.shoots.forEach((shoot) => {
-      // shoot.audio.currentTime =0;    -------arreglar sonido miercoles
-      // shoot.audio.play();
       shoot.draw();
     });
     ;
@@ -131,7 +138,8 @@ class Game {
           this.explosions.push(new Explosion (this.canvas,shoot.x,shoot.y));
           this.shoots.splice(index,1);
           this.enemies1.splice(indexEnemy,1);
-          enemySound.currentTime =0;enemySound.play();enemySound.volume = 0.5;
+          console.log(enemy.x,enemy.y);
+          this.enemySound.currentTime =0;this.enemySound.play();this.enemySound.volume = 0.3;
           this.player.updateScore(true);
           this.speedGame = this.speedGame+this.speedIncrease;
           this.enemies1.forEach((e,indexe)=>{
@@ -156,6 +164,8 @@ class Game {
     });
   };
   gameOverCallback(callback){
+    
     this.onGameOver = callback;
+    
   };
 };
