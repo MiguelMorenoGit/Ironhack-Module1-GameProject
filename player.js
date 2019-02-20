@@ -16,7 +16,7 @@ class Player {
     // this.directionX = 0;
     // this.directionY = 0;
     this.lives = lives;
-    this.score = 100000;
+    this.score = 0;
     this.img = imgPig;
     // para hacer del png un gif
     this.imgGif = imgPigGif;

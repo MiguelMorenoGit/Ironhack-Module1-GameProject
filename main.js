@@ -44,7 +44,7 @@ const main = ()=>{
       <h3 class="score"></h3>
       <h3 class="live"></h3>
     </div>
-    <canvas>
+    <canvas class="background-game">
     </canvas>
     <audio volume="0.01" autoplay  loop>
       <source src="./sonidos/D1 - Go Straight (Original Version)-[AudioTrimmer.com].mp3">
