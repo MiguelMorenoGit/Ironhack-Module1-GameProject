@@ -20,7 +20,7 @@ const imgKeyboard = new Image();imgKeyboard.src = './images/keyboard.png';
 
 ///////////  AUDIOS  /////////////
 
-const audioLaser = new Audio('./sonidos/laser2.wav');
+// const audioLaser = new Audio('./sonidos/laser2.wav');
 //const gameSound = new Audio ("/sonidos/D1 - Go Straight (Original Version)-[AudioTrimmer.com].mp3");
 // const windSound = new Audio ("/sonidos/viento_en_un_canaveral_de_un_parque_1.mp3");
 //const enemySound = new Audio ("/sonidos/wreee.mp3");

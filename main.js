@@ -46,7 +46,7 @@ const main = ()=>{
     </div>
     <canvas class="background-game">
     </canvas>
-    <audio volume="0.01" autoplay  loop>
+    <audio volume="0.5" autoplay  loop>
       <source src="./sonidos/D1 - Go Straight (Original Version)-[AudioTrimmer.com].mp3">
     <audio>
     </section>
@@ -95,22 +95,11 @@ const main = ()=>{
 
     const setPlayerShoot = (e) => {
       if(e.keyCode === 32 ){
-        game.shoots.push(new PlayerShoot(game.canvas,game.player.x+140,game.player.y+40));
-        
+        game.shoots.push(new PlayerShoot(game.canvas,game.player.x+140,game.player.y+40));  
+       
       }
-        //console.log(game.shoots);
     };
     document.addEventListener('keydown', setPlayerShoot);
-
-    const setSoundShoot = (e) =>{
-      if(e.keyCode === 32){
-        audioLaser.currentTime =0;
-        audioLaser.play();
-        audioLaser.volume =3;
-      }
-    };
-    document.addEventListener('keydown', setSoundShoot);
-
     
   };   // -------  FINAL GAMESCREEN  -------
 
