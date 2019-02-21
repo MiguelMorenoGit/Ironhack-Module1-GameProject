@@ -13,10 +13,13 @@ const main = ()=>{
   const buildSplashScreen = ()=>{       // -------  INICIO SPLASHSCREEN  -------
     const splashScreen = buildDom(`
     <section class="splash-screen">
-     <img class="name" src="./images/NOMBRE_1.png" alt="name-game">
-     <img class="keyboard" src="./images/keyboard.png">
-     <button>Press for Play</button>
-     <canvas class="background-splash"></canvas>
+      <img class="name" src="./images/NOMBRE_1.png" alt="name-game">
+      <img class="keyboard" src="./images/keyboard.png">
+      <button>Press for Play</button>
+      <canvas class="background-splash"></canvas> 
+      <audio volume="0.5" autoplay  loop>
+      <source src="./sonidos/D1 - Go Straight (Original Version)-[AudioTrimmer.com].mp3">
+      <audio> 
     </section>
     `);
     const startButton = document.querySelector('button');
@@ -118,6 +121,9 @@ const main = ()=>{
         <button class="try-again">Try again!</button>
         <button class="restart">Restart</button>
       </div>
+      <audio volume="0.5" autoplay  loop>
+      <source src="./sonidos/D1 - Go Straight (Original Version)-[AudioTrimmer.com].mp3">
+      <audio>
     </section>
     `);
 
