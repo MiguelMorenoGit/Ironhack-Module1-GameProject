@@ -119,7 +119,7 @@ const main = ()=>{
       <canvas class="background-gameover"></canvas>
       <div class="end-buttons">
         <button class="try-again">Try again!</button>
-        <button class="restart">Restart</button>
+        <button class="restart">Home</button>
       </div>
       <audio volume="0.5" autoplay  loop>
       <source src="./sonidos/D1 - Go Straight (Original Version)-[AudioTrimmer.com].mp3">
