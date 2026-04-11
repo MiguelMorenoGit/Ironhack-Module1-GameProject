@@ -2,7 +2,7 @@
 
 class Player {
   constructor(canvas, lives){
-    this.debug = true; // Muestra hitbox y caja visual del sprite para depuración
+    this.gameConfig = CONFIG; // Para controlar hitbox y caja visual del sprite para depuración
 
     this.canvas = canvas; // Guardamos el canvas completo para poder consultar su ancho y alto 
     this.canvasObject = this.canvas.getContext('2d'); // Guardamos el contexto 2D, que es lo que usamos para dibujar
@@ -85,20 +85,11 @@ class Player {
 
   draw () {
 
-    this.drawHitbox();
+    this.drawHitbox(); // Dibujar la hitbox
+    this.drawSpriteBox(); // Dibujar la caja que contiene el sprite en pantalla
+    this.drawSprite(); // Dibujar el sprite del player en pantalla
+    this.animateSprite(); // Controlar la animación del sprite, cambiando el frame actual según el contador de animación
 
-    //-------------DIBUJAMOS LA CAJA VISUAL DEL SPRITE----------------
-    // Esta caja nos permite ver exactamente qué espacio ocupa el sprite en pantalla,
-    // independientemente del tamaño de la hitbox.
-    this.drawSpriteBox();
-
-    //-------------DIBUJAMOS EL SPRITE----------------
-    this.drawSprite();
-
-    //-------------ANIMACIÓN----------------
-    this.animateSprite();
-
-    
   };
 
   drawHitbox () {
@@ -111,7 +102,10 @@ class Player {
     // Como this.x y this.y son el CENTRO de la hitbox,
     // para dibujar el rectángulo tenemos que restar la mitad del ancho y alto.
 
-    this.canvasObject.fillStyle = 'rgb(255, 0, 0, 0.5)'; //Pasar a 0,0,0,0 
+    this.canvasObject.fillStyle = 'rgb(0, 0, 0, 0)'; 
+
+    if (this.gameConfig.debug.showHitbox) this.canvasObject.fillStyle = 'rgb(255, 0, 0, 0.5)';
+
     this.canvasObject.fillRect(
       this.x - this.hitboxWidth / 2,
       this.y - this.hitboxHeight / 2,
@@ -125,7 +119,8 @@ class Player {
     // Dibujamos una caja visual que representa exactamente
     // el espacio que ocupa el sprite en pantalla.
     // Sirve para ajustar mejor la relación entre sprite e hitbox.
-    this.canvasObject.fillStyle = 'rgba(0, 0, 255, 0.3)';
+    this.canvasObject.fillStyle = 'rgb(0, 0, 0, 0)';
+    if (this.gameConfig.debug.showSpriteBox) this.canvasObject.fillStyle = 'rgb(0, 0, 255, 0.5)';
     this.canvasObject.fillRect(
       this.x - this.spriteWidth / 2 + this.spriteOffsetX,
       this.y - this.spriteHeight / 2 + this.spriteOffsetY,

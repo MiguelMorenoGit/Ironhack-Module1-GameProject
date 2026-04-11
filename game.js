@@ -22,7 +22,7 @@ class Game {
     // this.gameSound= new Audio ("./sonidos/D1 - Go Straight (Original Version)-[AudioTrimmer.com].mp3");
     // this.windSound = new Audio ("./sonidos/viento_en_un_canaveral_de_un_parque_1.mp3");
     this.enemySound = new Audio ("./sonidos/wreee.mp3");
-    this.noEnemies = true;
+    this.noEnemies = false;
     
     
   };
