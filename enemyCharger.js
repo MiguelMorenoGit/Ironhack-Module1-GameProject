@@ -1,65 +1,85 @@
 'use strict';
 
-class PlayerShoot {
-  constructor(canvas, x, y) {
+class EnemyCharger {
+  constructor(canvas, y, speed) {
     this.gameConfig = CONFIG; // Para controlar hitbox y caja visual del sprite para depuración
 
     this.canvas = canvas; // Guardamos el canvas completo para poder consultar su ancho y alto
     this.canvasObject = this.canvas.getContext('2d'); // Guardamos el contexto 2D, que es lo que usamos para dibujar
 
-    //------------POSICION DEL DISPARO EN PANTALLA----------------
+    //------------POSICION DEL ENEMIGO EN PANTALLA----------------
     // Igual que en Player, x e y representan el CENTRO de la hitbox
-    this.x = x;
+    this.x = this.canvas.width;
     this.y = y;
 
-    //------------MOVIMIENTO DEL DISPARO----------------
-    this.speed = 25; // Velocidad horizontal del disparo
-    this.direction = 1; // El disparo avanza hacia la derecha
+    //------------MOVIMIENTO DEL ENEMIGO----------------
+    this.speed = speed; // Velocidad horizontal del enemigo
+    this.speedHeight = 2; // Velocidad del movimiento vertical en zig-zag
+    this.direction = -1; // Se mueve hacia la izquierda
+    this.limitHeight = 50 + Math.floor(Math.random() * 100); // Cuánto sube y baja respecto a su origen
+    this.isUp = true; // Controla si ahora mismo sube o baja
+    this.originY = y; // Posición Y inicial, usada como referencia para el movimiento vertical
 
     //------------IMAGENES Y ANIMACIÓN----------------
-    this.img = imgShoot; // Imagen estática del disparo, por si la necesitas en otro momento
-    this.imgGif = imgShootGif; // Spritesheet o imagen animada del disparo
+    this.img = imgEnemy1; // Imagen estática del enemigo, por si la necesitas en otro momento
+    this.imgGif = imgEnemy1Gif; // Spritesheet o imagen animada del enemigo
     this.currentFrame = 0; // Frame actual de la animación
     this.animationCounter = 0; // Contador que controla cuándo cambiar al siguiente frame
-    this.frameWidth = 200; // Ancho del frame dentro del spritesheet
-    this.frameHeight = 60; // Alto del frame dentro del spritesheet
+    this.frameWidth = 100; // Ancho del frame dentro del spritesheet
+    this.frameHeight = 150; // Alto del frame dentro del spritesheet
 
     //------------HITBOX / CAJA DE COLISION----------------
     // Puede ser diferente al tamaño del sprite para controlar mejor las colisiones
-    this.hitboxWidth = 140; // Ancho de la hitbox del disparo
-    this.hitboxHeight = 30; // Alto de la hitbox del disparo
+    this.hitboxWidth = 120; // Ancho de la hitbox
+    this.hitboxHeight = 120; // Alto de la hitbox
 
     //------------SPRITES----------------
-    this.spriteWidth = 200; // Ancho con el que se dibuja visualmente el sprite en pantalla
-    this.spriteHeight = 60; // Alto con el que se dibuja visualmente el sprite en pantalla
+    this.spriteWidth = 150; // Ancho con el que se dibuja visualmente el sprite en pantalla
+    this.spriteHeight = 150; // Alto con el que se dibuja visualmente el sprite en pantalla
 
     //------------OFFSET DEL SPRITE----------------
     // Estos offsets sirven para mover visualmente el sprite
     // respecto al centro de la hitbox.
     this.spriteOffsetX = 0; // Mueve el sprite en el eje X
     this.spriteOffsetY = 0; // Mueve el sprite en el eje Y
-
-    //------------SONIDO----------------
-    const laserSound = new Audio('./sonidos/laser.mp3');
-    laserSound.play();
   };
 
   update() {
-    // Movimiento horizontal del disparo
+    // Movimiento horizontal del enemigo
     this.x = this.x + this.direction * this.speed;
+
+    // Movimiento vertical tipo zig-zag
+    if (this.isUp) {
+      this.y = this.y - this.speedHeight;
+
+      if (this.y < this.originY - this.limitHeight) {
+        this.isUp = false;
+      }
+    } else {
+      this.y = this.y + this.speedHeight;
+
+      if (this.y > this.originY + this.limitHeight) {
+        this.isUp = true;
+      }
+    }
   };
+
+  updateSpeed(newSpeed) {
+    // Aumenta la velocidad actual del enemigo
+    this.speed = this.speed + newSpeed;
+  }
 
   draw() {
     this.drawHitbox(); // Dibujar la hitbox
     this.drawSpriteBox(); // Dibujar la caja que contiene el sprite en pantalla
-    this.drawSprite(); // Dibujar el sprite del disparo en pantalla
+    this.drawSprite(); // Dibujar el sprite del enemigo en pantalla
     this.animateSprite(); // Controlar la animación del sprite
   };
 
   drawHitbox() {
     //-------------DIBUJAMOS LA HITBOX----------------
 
-    // Dibujamos la caja solo para depuración.
+    // Dibujamos la caja verde solo para depuración.
     // Cuando el juego esté fino, puedes poner alpha 0 o comentarlo.
 
     // Como this.x y this.y son el CENTRO de la hitbox,
@@ -67,7 +87,7 @@ class PlayerShoot {
 
     this.canvasObject.fillStyle = 'rgb(0, 0, 0, 0)';
 
-    if (this.gameConfig.debug.showHitbox) this.canvasObject.fillStyle = 'rgb(255, 255, 0, 0.5)';
+    if (this.gameConfig.debug.showHitbox) this.canvasObject.fillStyle = 'rgb(0, 255, 0, 0.5)';
 
     this.canvasObject.fillRect(
       this.x - this.hitboxWidth / 2,
@@ -131,35 +151,47 @@ class PlayerShoot {
 
     this.animationCounter++; // Sumamos 1 en cada ciclo de dibujo
 
-    // Cambiamos de frame cada 6 ciclos
-    if (this.animationCounter % 6 === 0) this.currentFrame++;
+    // Cambiamos de frame cada 3 ciclos
+    if (this.animationCounter % 3 === 0) this.currentFrame++;
 
     // Cuando pasamos del último frame, volvemos al primero
-    if (this.currentFrame > 4) this.currentFrame = 0;
+    if (this.currentFrame > 11) this.currentFrame = 0;
   }
 
   checkCollisionEnemy(enemy) {
-    //---------------COLISIÓN ENTRE DISPARO Y ENEMIGO----------------
+    //---------------COLISIÓN ENTRE ENEMIGOS----------------
 
-    // Aquí usamos la hitbox del disparo
-    // y la hitbox del enemigo.
-    // Por eso el enemigo debe tener hitboxWidth e hitboxHeight.
+    // Aquí ya usamos hitbox propia para este enemigo.
+    // Si el otro enemigo todavía usa size, esta función no serviría bien.
+    // Lo ideal es que todos los enemigos terminen usando
+    // hitboxWidth e hitboxHeight.
 
     return (
-      // El lado derecho del disparo supera el lado izquierdo del enemigo
+      // El lado derecho de este enemigo supera el lado izquierdo del otro
       this.x + this.hitboxWidth / 2 > enemy.x - enemy.hitboxWidth / 2 &&
 
-      // El lado izquierdo del disparo está antes del lado derecho del enemigo
+      // El lado izquierdo de este enemigo está antes del lado derecho del otro
       this.x - this.hitboxWidth / 2 < enemy.x + enemy.hitboxWidth / 2 &&
 
-      // La parte superior del disparo está por encima de la parte inferior del enemigo
+      // La parte superior de este enemigo está por encima de la parte inferior del otro
       this.y - this.hitboxHeight / 2 < enemy.y + enemy.hitboxHeight / 2 &&
 
-      // La parte inferior del disparo está por debajo de la parte superior del enemigo
+      // La parte inferior de este enemigo está por debajo de la parte superior del otro
       this.y + this.hitboxHeight / 2 > enemy.y - enemy.hitboxHeight / 2
     );
   };
+};
 
-}
+debugger;
+
+
+
+
+
+
+
+
+
+
 
 debugger;

@@ -76,11 +76,26 @@ const main = ()=>{
       buildGameOverScreen(score);
     });
     game.startLoop();
+
+    // -------  PAUSE  -------//
+
+    game.isPaused = false; // Estado inicial
+
+    const togglePause = (event) => {
+      if (event.code === 'Enter') {
+        game.isPaused = !game.isPaused;
+      }
+    };
+
+    document.addEventListener('keydown', togglePause);
     
 
     // -------  CONTROLES  -------// puedes meter todo en una funcion const setmove y hacer al final un addeventlistener(setmove que llame a todos)
     
     const setPlayerDirectionDown = (event) => {
+
+      if (game.isPaused) return; // ⛔ NO HACER NADA SI ESTÁ EN PAUSA
+
       if(event.code === 'ArrowUp')game.player.up = true;
       if(event.code === 'ArrowDown')game.player.down = true;
       if(event.code === 'ArrowRight')game.player.right = true;
@@ -88,7 +103,10 @@ const main = ()=>{
     };
     document.addEventListener('keydown', setPlayerDirectionDown);
 
-    const setPlayerDirectionUp = (event) => {     
+    const setPlayerDirectionUp = (event) => {   
+      
+      if (game.isPaused) return; // ⛔ NO HACER NADA SI ESTÁ EN PAUSA
+
       if(event.code === 'ArrowUp')game.player.up = false;
       if(event.code === 'ArrowDown')game.player.down = false;
       if(event.code === 'ArrowRight')game.player.right = false;
@@ -97,8 +115,11 @@ const main = ()=>{
     document.addEventListener('keyup', setPlayerDirectionUp);
 
     const setPlayerShoot = (e) => {
+
+      if (game.isPaused) return; // ⛔ NO HACER NADA SI ESTÁ EN PAUSA
+      
       if(e.keyCode === 32 ){
-        game.shoots.push(new PlayerShoot(game.canvas,game.player.x+140,game.player.y+40));  
+        game.shoots.push(new PlayerShoot(game.canvas,game.player.x + 70,game.player.y+40));  
        
       }
     };

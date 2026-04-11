@@ -206,17 +206,17 @@ class Player {
 
     return (
 
-      // El lado derecho del player supera el lado izquierdo del enemigo
-      this.x + this.hitboxWidth / 2 > enemy.x - enemy.size / 2 &&
+      // El lado derecho de este enemigo supera el lado izquierdo del otro
+      this.x + this.hitboxWidth / 2 > enemy.x - enemy.hitboxWidth / 2 &&
 
-      // El lado izquierdo del player está antes del lado derecho del enemigo
-      this.x - this.hitboxWidth / 2 < enemy.x + enemy.size / 2 &&
+      // El lado izquierdo de este enemigo está antes del lado derecho del otro
+      this.x - this.hitboxWidth / 2 < enemy.x + enemy.hitboxWidth / 2 &&
 
-      // La parte superior del player está por encima de la parte inferior del enemigo
-      this.y - this.hitboxHeight / 2 < enemy.y + enemy.size / 2 &&
+      // La parte superior de este enemigo está por encima de la parte inferior del otro
+      this.y - this.hitboxHeight / 2 < enemy.y + enemy.hitboxHeight / 2 &&
 
-      // La parte inferior del player está por debajo de la parte superior del enemigo
-      this.y + this.hitboxHeight / 2 > enemy.y - enemy.size / 2
+      // La parte inferior de este enemigo está por debajo de la parte superior del otro
+      this.y + this.hitboxHeight / 2 > enemy.y - enemy.hitboxHeight / 2
     
     ); 
 

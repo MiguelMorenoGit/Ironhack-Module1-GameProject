@@ -2,6 +2,7 @@
 
 class Game {
   constructor(canvas,callbackScore,playerLives){
+    this.isPaused = false;
     this.canvas= canvas;
     this.canvasObject = this.canvas.getContext('2d');
     this.player;
@@ -33,39 +34,43 @@ class Game {
     this.player = new Player(this.canvas, 3);
     this.parallax2 = new Parallax2(this.canvas);
     this.parallax1 = new Parallax1(this.canvas);
-    // this.gameSound.currentTime =0;this.gameSound.play();this.gameSound.volume = 0.2;
-    // this.windSound.currentTime =0;this.windSound.play();this.windSound.volume = 0.1;
+    this.isPaused = false; // Estado inicial de pausa
     
-    
-
-    //const y = Math.random()*this.canvas.height;
-    // this.enemies1.push(new Enemy1(this.canvas,y));
-
     const loop = () => {
 
-      if (!this.noEnemies) {
-        if(Math.random() > this.enemyCount) {
+      // Solo actualizamos lógica del juego si NO está en pausa
+      if (!this.isPaused) {
+
+        if (!this.noEnemies) {
+          if(Math.random() > this.enemyCount) {
+            const y = Math.random()*this.canvas.height;
+            this.enemies1.push(new EnemyCharger(this.canvas,y,this.speedGame));
+          };
+        }
+
+
+        if(Math.random() > 0.8) {
           const y = Math.random()*this.canvas.height;
-          this.enemies1.push(new Enemy1(this.canvas,y,this.speedGame));
+          this.clouds.push(new Cloud(this.canvas,y));
         };
-      }
 
-
-      if(Math.random() > 0.8) {
-        const y = Math.random()*this.canvas.height;
-        this.clouds.push(new Cloud(this.canvas,y));
+      
+        this.checkAllCollisions();
+        this.updateCanvas();
+        this.updateScoreInMain(this.player.score);
+        this.playerLives.innerHTML="  Your lives :  " + this.player.lives;
+        window.requestAnimationFrame(loop);
       };
 
+      // Esto sí se hace siempre, también en pausa
       this.clearCanvas ();
       this.drawCanvas ();
-      this.checkAllCollisions();
-      this.updateCanvas();
-      this.updateScoreInMain(this.player.score);
-      this.playerLives.innerHTML="  Your lives :  " + this.player.lives;
-      window.requestAnimationFrame(loop);
+
+      
     };
-    
+
     window.requestAnimationFrame(loop);
+
     
     
   };
@@ -119,6 +124,16 @@ class Game {
         this.explosions.splice(indexExplosion,1);
       };
     });
+
+    if (this.isPaused) {
+      this.canvasObject.fillStyle = 'rgba(0, 0, 0, 0.5)';
+      this.canvasObject.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+      this.canvasObject.fillStyle = 'white';
+      this.canvasObject.font = '60px Arial';
+      this.canvasObject.textAlign = 'center';
+      this.canvasObject.fillText('PAUSE', this.canvas.width / 2, this.canvas.height / 2);
+    }
   };
 
   checkAllCollisions(){
