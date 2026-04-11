@@ -71,8 +71,6 @@ class Game {
 
     window.requestAnimationFrame(loop);
 
-    
-    
   };
 
   updateCanvas(){
