@@ -78,7 +78,11 @@ class Player {
   draw (){
     this.canvasObject.fillStyle = 'rgb(0,0,0,0)';
     this.canvasObject.fillRect(this.x - this.size/2 , this.y - this.size/2 , this.size, this.size);
-    this.canvasObject.drawImage(this.imgGif,170*this.imageFrame, 0, 170 ,120,this.x -this.size/2,this.y-this.size/2,this.size+50,this.size);
+    this.canvasObject.drawImage(
+      this.imgGif,170*this.imageFrame,
+      0,170 ,120,this.x -this.size/2,
+      this.y-this.size/2,this.size+50,this.size
+    );
     this.imageSpeed++;
     if(this.imageSpeed % 2 === 0){
       this.imageFrame++;
@@ -99,7 +103,7 @@ class Player {
     } else if (this.x - this.size*2>= this.canvas.width* 0.6){ // 0.7 para que la nave no vaya al final
       this.right = false;
     }
-    if (this.y <= 0){ // contacto arriba
+    if (this.y - this.size/1.8 <= 0){ // contacto arriba
       this.up = false;
     } else if ( this.y + this.size/2.5 >= this.canvas.height ){ // contacto abajo
       this.down = false;
