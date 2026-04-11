@@ -22,6 +22,7 @@ class Game {
     // this.gameSound= new Audio ("./sonidos/D1 - Go Straight (Original Version)-[AudioTrimmer.com].mp3");
     // this.windSound = new Audio ("./sonidos/viento_en_un_canaveral_de_un_parque_1.mp3");
     this.enemySound = new Audio ("./sonidos/wreee.mp3");
+    this.noEnemies = true;
     
     
   };
@@ -42,10 +43,13 @@ class Game {
 
     const loop = () => {
 
-      if(Math.random() > this.enemyCount) {
-        const y = Math.random()*this.canvas.height;
-        this.enemies1.push(new Enemy1(this.canvas,y,this.speedGame));
-      };
+      if (!this.noEnemies) {
+        if(Math.random() > this.enemyCount) {
+          const y = Math.random()*this.canvas.height;
+          this.enemies1.push(new Enemy1(this.canvas,y,this.speedGame));
+        };
+      }
+
 
       if(Math.random() > 0.8) {
         const y = Math.random()*this.canvas.height;

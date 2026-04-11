@@ -2,9 +2,10 @@
 
 class Player {
   constructor(canvas, lives){
+    this.debug = true; // Muestra hitbox y caja visual del sprite para depuración
+
     this.canvas = canvas; // Guardamos el canvas completo para poder consultar su ancho y alto 
     this.canvasObject = this.canvas.getContext('2d'); // Guardamos el contexto 2D, que es lo que usamos para dibujar
-    this.size= 150; //Medida para el Player
     
     //------------POSICION DEL PERSONAJE EN PANTALLA----------------
     this.x = this.canvas.width / 4; // Coordenada X en pantalla del centro de la hitbox del player
@@ -13,7 +14,7 @@ class Player {
     //------------MOVIMIENTO DEL PERSONAJE----------------
     this.baseSpeed = 10
     this.currentSpeed = this.baseSpeed; // Velocidad normal del Player
-    this.diagonalSpeed = this.currentSpeed * 0.7; // Velocidad en Diagonal del Player, así evitamos que en diagonal corra más que en horizontal/vertical.
+    this.diagonalSpeed = this.baseSpeed * 0.7; // Velocidad en Diagonal del Player, así evitamos que en diagonal corra más que en horizontal/vertical.
     // Flags de movimiento, se activan y desactivan al pulsar o soltar teclas.
     this.left = false;   //
     this.right = false;   //
@@ -30,21 +31,22 @@ class Player {
     this.currentFrame = 0; // Frame actual de la animación
     this.animationCounter = 0; // Contador que controla cuándo cambiar al siguiente frame
     this.frameWidth = 170;
-    this.frameHeight = 120;
+    this.frameHeight = 100;
     
     //------------HITBOX / CAJA DE COLISION----------------
     // Puede ser diferente al tamaño del Sprite para controlar mejor al personaje y sus colisiones
-    this.hitboxWidth = 100; // Ancho de la hitbox, 
-    this.hitboxHeight = 80; // Alto de la hitbox
+    this.hitboxWidth = 120; // Ancho de la hitbox, 
+    this.hitboxHeight = 120;
+    ; // Alto de la hitbox
 
     //------------SPRITES----------------
-    this.spriteWidth = 170; // Ancho con el que se dibuja visualmente el sprite en pantalla
-    this.spriteHeight = 150; // Alto con el que se dibuja visualmente el sprite en pantalla
+    this.spriteWidth = this.frameWidth * 1.5; // Ancho con el que se dibuja visualmente el sprite en pantalla
+    this.spriteHeight = this.frameHeight * 1.5; // Alto con el que se dibuja visualmente el sprite en pantalla
 
     //------------OFFSET DEL SPRITE----------------
     // Estos offsets sirven para mover visualmente el sprite
     // respecto al centro de la hitbox.
-    this.spriteOffsetX = -20; // Mueve el sprite en el eje X 
+    this.spriteOffsetX = -30; // Mueve el sprite en el eje X 
     this.spriteOffsetY = 0; // Mueve el sprite en el eje Y
 
   };
@@ -83,12 +85,32 @@ class Player {
 
   draw () {
 
+    this.drawHitbox();
+
+    //-------------DIBUJAMOS LA CAJA VISUAL DEL SPRITE----------------
+    // Esta caja nos permite ver exactamente qué espacio ocupa el sprite en pantalla,
+    // independientemente del tamaño de la hitbox.
+    this.drawSpriteBox();
+
+    //-------------DIBUJAMOS EL SPRITE----------------
+    this.drawSprite();
+
+    //-------------ANIMACIÓN----------------
+    this.animateSprite();
+
+    
+  };
+
+  drawHitbox () {
+    
     //-------------DIBUJAMOS LA HITBOX----------------
+
     // Dibujamos la caja roja solo para depuración.
     // Cuando el juego esté fino, puedes poner alpha 0 o comentarlo.
-    //
+    
     // Como this.x y this.y son el CENTRO de la hitbox,
     // para dibujar el rectángulo tenemos que restar la mitad del ancho y alto.
+
     this.canvasObject.fillStyle = 'rgb(255, 0, 0, 0.5)'; //Pasar a 0,0,0,0 
     this.canvasObject.fillRect(
       this.x - this.hitboxWidth / 2,
@@ -96,7 +118,24 @@ class Player {
       this.hitboxWidth,
       this.hitboxHeight
     );
+  }
 
+  drawSpriteBox () {
+
+    // Dibujamos una caja visual que representa exactamente
+    // el espacio que ocupa el sprite en pantalla.
+    // Sirve para ajustar mejor la relación entre sprite e hitbox.
+    this.canvasObject.fillStyle = 'rgba(0, 0, 255, 0.3)';
+    this.canvasObject.fillRect(
+      this.x - this.spriteWidth / 2 + this.spriteOffsetX,
+      this.y - this.spriteHeight / 2 + this.spriteOffsetY,
+      this.spriteWidth,
+      this.spriteHeight
+    );
+
+  }
+
+  drawSprite () {
     //-------------DIBUJAMOS EL SPRITE----------------
 
     // drawImage recibe:
@@ -126,8 +165,11 @@ class Player {
       this.spriteWidth,
       this.spriteHeight
     );
+  }
 
-    //-------------ANIMACIÓN----------------
+  animateSprite () {
+
+     //-------------ANIMACIÓN----------------
 
     this.animationCounter ++ ; // Sumamos 1 en cada ciclo de dibujo
 
@@ -135,37 +177,26 @@ class Player {
     if (this.animationCounter % 2 === 0) this.currentFrame ++ ; 
     // Cuando pasamos del último frame, volvemos al primero
     if (this.currentFrame > 9) this.currentFrame = 0; 
-    
-  };
+  }
 
 
   checkScreen () {
 
     // -------------LÍMITES DE PANTALLA----------------
-
-    /* if (this.x <= 0) this.left = false;
-    else if (this.x - this.size*2>= this.canvas.width* 0.6){ // 0.7 para que la nave no vaya al final
-      this.right = false;
-    }
-    if (this.y - this.size/1.8 <= 0){ // contacto arriba
-      this.up = false;
-    } else if ( this.y + this.size/2.5 >= this.canvas.height ){ // contacto abajo
-      this.down = false;
-    } */
-
-    // Calculamos los bordes de la hitbox a partir de su centro.
-    const hitboxLeft = this.x - this.spriteWidth / 2;
-    const hitboxRight = this.x + this.spriteWidth / 2;
-    const hitboxTop = this.y - this.spriteHeight / 2;
-    const hitboxBottom = this.y + this.spriteHeight / 2;
+    // Calculamos los bordes visuales del sprite a partir de su centro.
+    // Aquí usamos el sprite y no la hitbox, porque queremos que
+    // la imagen no se salga de la pantalla aunque la hitbox sea distinta.
+    const spriteLeft = this.x - this.spriteWidth / 2 + this.spriteOffsetX;
+    const spriteRight = this.x + this.spriteWidth / 2 + this.spriteOffsetX;
+    const spriteTop = this.y - this.spriteHeight / 2 + this.spriteOffsetY;
+    const spriteBottom = this.y + this.spriteHeight / 2 + this.spriteOffsetY;
 
     // Cancelamos el movimiento al llegar a los limites marcados
-    if (hitboxLeft <= 0) this.left = false; // Limite Izquierdo
-    else if (hitboxRight >= this.canvas.width) this.right = false; // Limite Derecho
+    if (spriteLeft <= 0) this.left = false; // Limite Izquierdo
+    else if (spriteRight >= this.canvas.width) this.right = false; // Limite Derecho
 
-
-    if (hitboxTop <= 0) this.up = false; // Limite Superior
-    else if (hitboxBottom >= this.canvas.height) this.down = false; // Limite Inferior
+    if (spriteTop <= 0) this.up = false; // Limite Superior
+    else if (spriteBottom >= this.canvas.height) this.down = false; // Limite Inferior
     
   };
 
