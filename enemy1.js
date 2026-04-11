@@ -1,7 +1,7 @@
 'use strict';
 class Enemy1 {
   constructor(canvas,y,speed){
-      this.size = 170;
+      this.size = 150;
       this.canvas = canvas;
       this.canvasObject = this.canvas.getContext('2d');
       this.x = this.canvas.width;
@@ -45,7 +45,7 @@ class Enemy1 {
 
     
 
-    this.canvasObject.fillStyle = "rgb(0,0,0,0)";
+    this.canvasObject.fillStyle = "rgb(0,128,0,0.5)";
     this.canvasObject.fillRect(this.x - this.size/2 ,this.y - this.size/2, this.size, this.size);
     //this.canvasObject.drawImage(this.img, this.x -this.size/2, this.y-this.size/2, this.size ,this.size);
     this.canvasObject.drawImage(this.imgGif, 100*this.imageFrame, 0, 100 ,150,this.x -this.size/2, this.y-this.size/2, this.size ,this.size);
