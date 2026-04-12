@@ -13,12 +13,14 @@ class Explosion {
     this.imgGif = imgExplosionGif;
     this.imageFrame = 0;
     this.imageSpeed = 0;
+    this.isAlive = true;
    
 
   };
 
   update(){
     this.x = this.x + this.direction * this.speed;
+    this.isAlive = this.animateSprite();
     
   };
 
@@ -29,8 +31,17 @@ class Explosion {
       
       this.canvasObject.fillStyle = 'rgb(0,0,0,0)';
       this.canvasObject.fillRect(this.x - this.size/2 , this.y - this.size/2 , this.size, this.size);
-      this.canvasObject.drawImage(this.imgGif, 130*this.imageFrame, 0, 130 , 130, this.x -this.size/2,this.y-this.size/2,this.size,this.size);
-      this.imageSpeed++;
+      this.drawSprite();
+      
+    }
+  };
+
+  drawSprite(){
+    this.canvasObject.drawImage(this.imgGif, 130*this.imageFrame, 0, 130 , 130, this.x -this.size/2,this.y-this.size/2,this.size,this.size);
+  }
+
+  animateSprite() {
+    this.imageSpeed++;
       if(this.imageSpeed % 7=== 0){
         this.imageFrame++;
       } 
@@ -40,8 +51,8 @@ class Explosion {
       } else {
         return true;
       }
-    }
-  };
+  }
+
 };
 
 

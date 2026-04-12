@@ -62,6 +62,7 @@ class EnemyCharger {
         this.isUp = true;
       }
     }
+    this.animateSprite(); // Controlar la animación del sprite
   };
 
   updateSpeed(newSpeed) {
@@ -73,7 +74,6 @@ class EnemyCharger {
     this.drawHitbox(); // Dibujar la hitbox
     this.drawSpriteBox(); // Dibujar la caja que contiene el sprite en pantalla
     this.drawSprite(); // Dibujar el sprite del enemigo en pantalla
-    this.animateSprite(); // Controlar la animación del sprite
   };
 
   drawHitbox() {

@@ -47,13 +47,13 @@ class PlayerShoot {
   update() {
     // Movimiento horizontal del disparo
     this.x = this.x + this.direction * this.speed;
+    this.animateSprite(); // Controlar la animación del sprite
   };
 
   draw() {
     this.drawHitbox(); // Dibujar la hitbox
     this.drawSpriteBox(); // Dibujar la caja que contiene el sprite en pantalla
     this.drawSprite(); // Dibujar el sprite del disparo en pantalla
-    this.animateSprite(); // Controlar la animación del sprite
   };
 
   drawHitbox() {

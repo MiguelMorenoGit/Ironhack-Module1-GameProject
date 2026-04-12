@@ -25,7 +25,7 @@ class Game {
     this.enemySound = new Audio ("./sonidos/wreee.mp3");
     this.noEnemies = false;
     
-    
+
   };
 
   startLoop(){
@@ -59,21 +59,22 @@ class Game {
         this.updateCanvas();
         this.updateScoreInMain(this.player.score);
         this.playerLives.innerHTML="  Your lives :  " + this.player.lives;
-        window.requestAnimationFrame(loop);
       };
-
+      
       // Esto sí se hace siempre, también en pausa
       this.clearCanvas ();
       this.drawCanvas ();
-
+      window.requestAnimationFrame(loop);
+      
       
     };
-
+    
     window.requestAnimationFrame(loop);
 
   };
 
   updateCanvas(){
+    if (this.isPaused) return;
     this.parallax2.update();
     this.parallax1.update();
     this.player.update();
@@ -117,22 +118,26 @@ class Game {
     });
 
     this.explosions.forEach((explosion,indexExplosion) =>{
-      const isItDrawing = explosion.draw(true);
-      if (!isItDrawing){
+      explosion.draw(true);
+      if (!explosion.isAlive){
         this.explosions.splice(indexExplosion,1);
       };
     });
 
-    if (this.isPaused) {
-      this.canvasObject.fillStyle = 'rgba(0, 0, 0, 0.5)';
-      this.canvasObject.fillRect(0, 0, this.canvas.width, this.canvas.height);
-
-      this.canvasObject.fillStyle = 'white';
-      this.canvasObject.font = '60px Arial';
-      this.canvasObject.textAlign = 'center';
-      this.canvasObject.fillText('PAUSE', this.canvas.width / 2, this.canvas.height / 2);
-    }
+    if (this.isPaused) this.drawPauseScreen();
+  
   };
+
+  drawPauseScreen () {
+    this.canvasObject.fillStyle = 'rgba(0, 0, 0, 0.5)';
+    this.canvasObject.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+    this.canvasObject.fillStyle = 'white';
+    this.canvasObject.font = '60px Arial';
+    this.canvasObject.textAlign = 'center';
+    this.canvasObject.fillText('PAUSE', this.canvas.width / 2, this.canvas.height / 2);
+    
+  }
 
   checkAllCollisions(){
     this.player.checkScreen();

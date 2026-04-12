@@ -60,6 +60,7 @@ const main = ()=>{
     const scoreLabel = document.querySelector(".score");
     const playerLives = document.querySelector(".live");
     const canvasElement = document.querySelector('canvas');
+    let enterPressed = false; // 🔥 control de enter para pause
 
     canvasElement.setAttribute('width',width);
     canvasElement.setAttribute('height',height);
@@ -82,12 +83,21 @@ const main = ()=>{
     game.isPaused = false; // Estado inicial
 
     const togglePause = (event) => {
-      if (event.code === 'Enter') {
+      if (event.code === 'Enter' && !enterPressed) {
+        enterPressed = true;
         game.isPaused = !game.isPaused;
       }
     };
 
+    const resetEnter = (event) => {
+      if (event.code === 'Enter') {
+        enterPressed = false;
+      }
+    };
+
     document.addEventListener('keydown', togglePause);
+    document.addEventListener('keyup', resetEnter);
+   
     
 
     // -------  CONTROLES  -------// puedes meter todo en una funcion const setmove y hacer al final un addeventlistener(setmove que llame a todos)
@@ -104,8 +114,6 @@ const main = ()=>{
     document.addEventListener('keydown', setPlayerDirectionDown);
 
     const setPlayerDirectionUp = (event) => {   
-      
-      if (game.isPaused) return; // ⛔ NO HACER NADA SI ESTÁ EN PAUSA
 
       if(event.code === 'ArrowUp')game.player.up = false;
       if(event.code === 'ArrowDown')game.player.down = false;

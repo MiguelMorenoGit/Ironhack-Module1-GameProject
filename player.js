@@ -58,6 +58,7 @@ class Player {
     if (this.left) this.x = this.x - this.currentSpeed;
     if (this.up) this.y = this.y - this.currentSpeed;
     if (this.down) this.y = this.y + this.currentSpeed;
+    this.animateSprite(); // Controlar la animación del sprite, cambiando el frame actual según el contador de animación
   };
 
   updateScore (isShoot) {
@@ -88,7 +89,6 @@ class Player {
     this.drawHitbox(); // Dibujar la hitbox
     this.drawSpriteBox(); // Dibujar la caja que contiene el sprite en pantalla
     this.drawSprite(); // Dibujar el sprite del player en pantalla
-    this.animateSprite(); // Controlar la animación del sprite, cambiando el frame actual según el contador de animación
 
   };
 
