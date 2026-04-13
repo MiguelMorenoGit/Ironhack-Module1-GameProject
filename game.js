@@ -1,3 +1,4 @@
+// @ts-nocheck
 'use strict';
 
 class Game {
@@ -5,16 +6,17 @@ class Game {
     this.isPaused = false;
     this.canvas= canvas;
     this.canvasObject = this.canvas.getContext('2d');
-    this.player;
+    this.player = null;
     //this.playerNewLives = playerLives;
     this.playerLives=playerLives;
-    this.parallax1;
-    this.parallax2;
+    this.parallax1 = null;
+    this.parallax2 = null;
     this.shoots =[];
     this.enemies1 = [];
     this.clouds = [];
     this.explosions = [];
     this.isGameOver = false;
+    this.onGameOver = null;
     this.updateScoreInMain = callbackScore;
     this.speedIncrease = 0.02;
     this.speedGame = 3;
@@ -146,15 +148,30 @@ class Game {
          this.enemies1.splice(indexEnemy,1);
          this.player.updateScore(false);
       };
-      if(this.player.checkCollisionEnemy(enemy)){
-        this.player.loseLive();
-        this.enemies1.splice(indexEnemy,1);
-        if (this.player.lives === 0){
-          this.isGameOver = true;
-          this.onGameOver(this.player.score); 
-        }; 
-      };
+
+      // if(this.player.checkCollisionEnemy(enemy)){
+      //   this.player.loseLive();
+      //   this.enemies1.splice(indexEnemy,1);
+      //   if (this.player.lives === 0){
+      //     this.isGameOver = true;
+      //     this.onGameOver(this.player.score); 
+      //   }; 
+      // };
       
+      if (this.player.checkCollisionEnemy(enemy)) {
+        const hasRecieveDamage = this.player.recieveDamage();
+
+        if (hasRecieveDamage) {
+          this.explosions.push(new Explosion (this.canvas,enemy.x,enemy.y));
+          this.enemies1.splice(indexEnemy, 1);
+
+          if (this.player.lives === 0) {
+            this.isGameOver = true;
+            this.onGameOver(this.player.score);
+          }
+        }
+      }
+
       this.shoots.forEach ((shoot, index) =>{
         if (shoot.checkCollisionEnemy(enemy)){
           this.explosions.push(new Explosion (this.canvas,shoot.x,shoot.y));

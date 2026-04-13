@@ -25,6 +25,17 @@ class Player {
     this.lives = lives; // Vidas actuales del jugador
     this.score = 0; // Puntuación actual del jugador
 
+    //------------INVENCIBILIDAD Y DAÑO----------------
+    this.isInvincible = false; // Flag que indica si el jugador está en estado de invencibilidad
+    this.invincibleStartTime = 0; // Momento en el que comenzó la invencibilidad, para controlar su duración
+    this.isVisible = true; // Flag para controlar el parpadeo del sprite durante la invencibilidad
+
+    //------------SHAKE AL RECIBIR DAÑO----------------
+    this.isHitShaking = false; // Flag que indica si el jugador está en estado de shake por daño
+    this.hitShakeStartTime = 0; // Momento en el que comenzó el shake, para controlar su duración
+    this.hitShakeOffsetX = 0; // Desplazamiento en X durante el shake
+    this.hitShakeOffsetY = 0; // Desplazamiento en Y durante el shake
+
     //------------IMAGENES Y ANIMACIÓN----------------
     this.img = imgPig; // Imagen estática del personaje, por si la necesitas en otro momento
     this.imgGif = imgPigGif; // Spritesheet o imagen animada del personaje
@@ -58,7 +69,11 @@ class Player {
     if (this.left) this.x = this.x - this.currentSpeed;
     if (this.up) this.y = this.y - this.currentSpeed;
     if (this.down) this.y = this.y + this.currentSpeed;
-    this.animateSprite(); // Controlar la animación del sprite, cambiando el frame actual según el contador de animación
+    
+    this.updateInvincibility(); // Controlar el estado de invencibilidad, su duración y el parpadeo del sprite
+    this.updateHitShake(); // Controlar el estado de shake por daño, su duración y el desplazamiento del shake
+    this.animateSprite();   // Controlar la animación del sprite, cambiando el frame actual según el contador de animación
+    
   };
 
   updateScore (isShoot) {
@@ -83,6 +98,63 @@ class Player {
     if (isMovingDiagonally) this.currentSpeed = this.diagonalSpeed;
 
   };
+
+  updateInvincibility () {
+    if (!this.isInvincible) {
+      this.isVisible = true; // Si no estamos invencibles, el sprite siempre es visible
+      return;
+    } 
+
+    const now = Date.now(); // Obtenemos el tiempo actual para comparar con el momento en que comenzó la invencibilidad
+    const elapsed = now - this.invincibleStartTime; // Calculamos cuánto tiempo ha pasado desde que comenzó la invencibilidad
+
+    // Controlamos el parpadeo del sprite durante la invencibilidad
+    this.isVisible = Math.floor(elapsed / this.gameConfig.player.blinkInterval) % 2 === 0;
+    
+    // Fin de la invencibilidad
+    if (elapsed >= this.gameConfig.player.invincibleDuration) {
+      this.isInvincible = false; // Terminamos la invencibilidad
+      this.isVisible = true; // Aseguramos que el sprite sea visible al terminar la invencibilidad
+    }
+
+  }
+
+  updateHitShake () {
+    if (!this.isHitShaking) {
+      this.hitShakeOffsetX = 0; // Si no estamos en shake, no hay desplazamiento
+      this.hitShakeOffsetY = 0; // Si no estamos en shake, no hay desplazamiento
+      return;
+    }
+
+    const now = Date.now(); // Obtenemos el tiempo actual para comparar con el momento en que comenzó el shake
+    const elapsed = now - this.hitShakeStartTime; // Calculamos cuánto tiempo ha pasado desde que comenzó el shake
+
+    // Controlamos el desplazamiento del shake, aplicando una fuerza aleatoria en X e Y
+    this.hitShakeOffsetX = (Math.random() * 2 - 1) * this.gameConfig.player.hitShakeForce; // Desplazamiento aleatorio en X
+    this.hitShakeOffsetY = (Math.random() * 2 - 1) * this.gameConfig.player.hitShakeForce; // Desplazamiento aleatorio en Y
+
+  }
+
+  activeHitEffect () {
+    this.isHitShaking = true; // Activamos el shake por daño
+    this.hitShakeStartTime = Date.now(); // Guardamos el momento en que comenzó el shake
+  }
+
+  activeInvencibility () {
+    this.isInvincible = true; // Activamos la invencibilidad
+    this.invincibleStartTime = Date.now(); // Guardamos el momento en que comenzó la invencibilidad
+  }
+
+  recieveDamage () {
+    // Si ya es invencible, ignoramos el golpe
+    if(this,this.isInvincible) return false;
+
+    this.lives--; // Restamos una vida al jugador
+    this.activeInvencibility(); // Activamos la invencibilidad al recibir daño
+    this.activeHitEffect(); // Activamos el shake por daño
+
+    return true; // Devolvemos true para indicar que el golpe ha sido efectivo
+  }
 
   draw () {
 
@@ -221,8 +293,6 @@ class Player {
     ); 
 
   };
-
-  loseLive() { this.lives -- ; } // Resta una vida al jugador
 
 };
 
