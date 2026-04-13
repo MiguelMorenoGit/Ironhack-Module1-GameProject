@@ -12,15 +12,16 @@ class Game {
     this.parallax1 = null;
     this.parallax2 = null;
     this.shoots =[];
-    this.enemies1 = [];
+    this.enemieChargerArray= [];
+    this.enemieChargerMax= 6;
     this.clouds = [];
     this.explosions = [];
     this.isGameOver = false;
     this.onGameOver = null;
     this.updateScoreInMain = callbackScore;
-    this.speedIncrease = 0.02;
+    this.speedIncrease = 0.04;
     this.speedGame = 3;
-    this.enemyIncrease = -0.0005;
+    this.enemyIncrease = -0.0001;
     this.enemyCount = 0.98;
     // this.gameSound= new Audio ("./sonidos/D1 - Go Straight (Original Version)-[AudioTrimmer.com].mp3");
     // this.windSound = new Audio ("./sonidos/viento_en_un_canaveral_de_un_parque_1.mp3");
@@ -43,10 +44,11 @@ class Game {
       // Solo actualizamos lógica del juego si NO está en pausa
       if (!this.isPaused) {
 
-        if (!this.noEnemies) {
+        if (!this.noEnemies && this.enemieChargerArray.length < this.enemieChargerMax) {
           if(Math.random() > this.enemyCount) {
-            const y = Math.random()*this.canvas.height;
-            this.enemies1.push(new EnemyCharger(this.canvas,y,this.speedGame));
+            const enemyMarginY = 200;
+            const y = Math.random() * (this.canvas.height - enemyMarginY/2) + enemyMarginY/2;
+            this.enemieChargerArray.push(new EnemyCharger(this.canvas,y,this.speedGame));
           };
         }
 
@@ -84,7 +86,7 @@ class Game {
     this.shoots.forEach((shoot) => {
       shoot.update();
     });
-    this.enemies1.forEach((enemy)=>{
+    this.enemieChargerArray.forEach((enemy)=>{
       enemy.update();
       
     });
@@ -111,7 +113,7 @@ class Game {
       shoot.draw();
     });
     ;
-    this.enemies1.forEach((enemy)=>{
+    this.enemieChargerArray.forEach((enemy)=>{
       enemy.draw(); 
     });
 
@@ -143,15 +145,15 @@ class Game {
 
   checkAllCollisions(){
     this.player.checkScreen();
-    this.enemies1.forEach ((enemy, indexEnemy) =>{
+    this.enemieChargerArray.forEach ((enemy, indexEnemy) =>{
       if (enemy.x - enemy.size/2 <= 0 ){
-         this.enemies1.splice(indexEnemy,1);
+         this.enemieChargerArray.splice(indexEnemy,1);
          this.player.updateScore(false);
       };
 
       // if(this.player.checkCollisionEnemy(enemy)){
       //   this.player.loseLive();
-      //   this.enemies1.splice(indexEnemy,1);
+      //   this.enemieChargerArray.splice(indexEnemy,1);
       //   if (this.player.lives === 0){
       //     this.isGameOver = true;
       //     this.onGameOver(this.player.score); 
@@ -162,8 +164,8 @@ class Game {
         const hasRecieveDamage = this.player.recieveDamage();
 
         if (hasRecieveDamage) {
-          this.explosions.push(new Explosion (this.canvas,enemy.x,enemy.y, 2, 400));
-          this.enemies1.splice(indexEnemy, 1);
+          this.explosions.push(new Explosion (this.canvas,enemy.x,enemy.y, 2, 356));
+          this.enemieChargerArray.splice(indexEnemy, 1);
 
           if (this.player.lives === 0) {
             this.isGameOver = true;
@@ -176,12 +178,12 @@ class Game {
         if (shoot.checkCollisionEnemy(enemy)){
           this.explosions.push(new Explosion (this.canvas,shoot.x,shoot.y, 30, 220));
           this.shoots.splice(index,1);
-          this.enemies1.splice(indexEnemy,1);
+          this.enemieChargerArray.splice(indexEnemy,1);
           console.log(enemy.x,enemy.y);
           this.enemySound.currentTime =0;this.enemySound.play();this.enemySound.volume = 0.3;
           this.player.updateScore(true);
           this.speedGame = this.speedGame+this.speedIncrease;
-          this.enemies1.forEach((e,indexe)=>{
+          this.enemieChargerArray.forEach((e,indexe)=>{
               e.updateSpeed(this.speedIncrease);            
           });
           this.enemyCount = this.enemyCount+this.enemyIncrease;
