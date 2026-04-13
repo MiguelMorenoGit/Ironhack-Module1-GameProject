@@ -1,13 +1,13 @@
 'use strict';
 
 class Explosion {
-  constructor(canvas, x,y){
-    this.size= 220;
+  constructor(canvas, x, y, speed, size){
+    this.size = size;
     this.canvas = canvas;
     this.canvasObject = this.canvas.getContext('2d');
     this.x = x;
     this.y = y;
-    this.speed = 12;
+    this.speed = speed;
     this.direction = -1;
     this.img = imgExplosion;
     this.imgGif = imgExplosionGif;

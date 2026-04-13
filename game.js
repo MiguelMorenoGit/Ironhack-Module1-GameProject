@@ -162,7 +162,7 @@ class Game {
         const hasRecieveDamage = this.player.recieveDamage();
 
         if (hasRecieveDamage) {
-          this.explosions.push(new Explosion (this.canvas,enemy.x,enemy.y));
+          this.explosions.push(new Explosion (this.canvas,enemy.x,enemy.y, 2, 400));
           this.enemies1.splice(indexEnemy, 1);
 
           if (this.player.lives === 0) {
@@ -174,7 +174,7 @@ class Game {
 
       this.shoots.forEach ((shoot, index) =>{
         if (shoot.checkCollisionEnemy(enemy)){
-          this.explosions.push(new Explosion (this.canvas,shoot.x,shoot.y));
+          this.explosions.push(new Explosion (this.canvas,shoot.x,shoot.y, 30, 220));
           this.shoots.splice(index,1);
           this.enemies1.splice(indexEnemy,1);
           console.log(enemy.x,enemy.y);
