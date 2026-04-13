@@ -35,6 +35,8 @@ class Player {
     this.hitShakeStartTime = 0; // Momento en el que comenzó el shake, para controlar su duración
     this.hitShakeOffsetX = 0; // Desplazamiento en X durante el shake
     this.hitShakeOffsetY = 0; // Desplazamiento en Y durante el shake
+    this.hitPushX = 0; // Sin empuje horizontal
+    this.hitPushY = 0; // Sin empuje vertical
 
     //------------IMAGENES Y ANIMACIÓN----------------
     this.img = imgPig; // Imagen estática del personaje, por si la necesitas en otro momento
@@ -110,6 +112,7 @@ class Player {
 
     // Controlamos el parpadeo del sprite durante la invencibilidad
     this.isVisible = Math.floor(elapsed / this.gameConfig.player.blinkInterval) % 2 === 0;
+    console.log("Is Visible: ", this.isVisible);
     
     // Fin de la invencibilidad
     if (elapsed >= this.gameConfig.player.invincibleDuration) {
@@ -123,16 +126,35 @@ class Player {
     if (!this.isHitShaking) {
       this.hitShakeOffsetX = 0; // Si no estamos en shake, no hay desplazamiento
       this.hitShakeOffsetY = 0; // Si no estamos en shake, no hay desplazamiento
+      this.hitPushX = 0; // Sin empuje horizontal
+      this.hitPushY = 0; // Sin empuje vertical
       return;
     }
 
     const now = Date.now(); // Obtenemos el tiempo actual para comparar con el momento en que comenzó el shake
     const elapsed = now - this.hitShakeStartTime; // Calculamos cuánto tiempo ha pasado desde que comenzó el shake
 
-    // Controlamos el desplazamiento del shake, aplicando una fuerza aleatoria en X e Y
-    this.hitShakeOffsetX = (Math.random() * 2 - 1) * this.gameConfig.player.hitShakeForce; // Desplazamiento aleatorio en X
-    this.hitShakeOffsetY = (Math.random() * 2 - 1) * this.gameConfig.player.hitShakeForce; // Desplazamiento aleatorio en Y
+    // 🔥 1. FIN DEL SHAKE
+    if (elapsed >= this.gameConfig.player.hitShakeDuration) {
+      this.isHitShaking = false;
+      this.hitShakeOffsetX = 0;
+      this.hitShakeOffsetY = 0;
+      this.hitPushX = 0;
+      this.hitPushY = 0;
+      return;
+    }
 
+    // 🔥 2. EMPUJE INICIAL QUE SE VA APAGANDO
+    this.hitPushX *= 0.8; // va perdiendo fuerza poco a poco
+    this.hitPushY *= 0.8;
+
+    // 🔥 3. SHAKE ENCIMA DEL EMPUJE
+    const randomX = (Math.random() * 2 - 1) * this.gameConfig.player.hitShakeForce;
+    const randomY = (Math.random() * 2 - 1) * (this.gameConfig.player.hitShakeForce * 0.2);
+
+    this.hitShakeOffsetX = this.hitPushX + randomX;
+    this.hitShakeOffsetY = this.hitPushY + randomY;
+    
   }
 
   activeHitEffect () {
@@ -143,11 +165,13 @@ class Player {
   activeInvencibility () {
     this.isInvincible = true; // Activamos la invencibilidad
     this.invincibleStartTime = Date.now(); // Guardamos el momento en que comenzó la invencibilidad
+     
+    
   }
 
   recieveDamage () {
     // Si ya es invencible, ignoramos el golpe
-    if(this,this.isInvincible) return false;
+    if(this.isInvincible) return false;
 
     this.lives--; // Restamos una vida al jugador
     this.activeInvencibility(); // Activamos la invencibilidad al recibir daño
@@ -194,8 +218,8 @@ class Player {
     this.canvasObject.fillStyle = 'rgb(0, 0, 0, 0)';
     if (this.gameConfig.debug.showSpriteBox) this.canvasObject.fillStyle = 'rgb(0, 0, 255, 0.5)';
     this.canvasObject.fillRect(
-      this.x - this.spriteWidth / 2 + this.spriteOffsetX,
-      this.y - this.spriteHeight / 2 + this.spriteOffsetY,
+      this.x - this.spriteWidth / 2 + this.spriteOffsetX + this.hitShakeOffsetX,
+      this.y - this.spriteHeight / 2 + this.spriteOffsetY + this.hitShakeOffsetY,
       this.spriteWidth,
       this.spriteHeight
     );
@@ -221,17 +245,31 @@ class Player {
     // pero además aplicando spriteOffsetX y spriteOffsetY
     // para poder ajustar manualmente el sprite.
 
+    // Si está en invencibilidad y toca "apagado", no dibujamos
+    if (this.isInvincible && !this.isVisible) return;
+
+    // Guardamos estado del canvas
+    this.canvasObject.save();
+     
+    // Aplicamos transparencia si está invencible
+    if (this.isInvincible) {
+      this.canvasObject.globalAlpha = this.gameConfig.player.invincibleAlpha;
+    }
+
     this.canvasObject.drawImage(
       this.imgGif, 
       this.frameWidth * this.currentFrame,
       0, 
       this.frameWidth, 
       this.frameHeight, 
-      this.x - this.spriteWidth / 2 + this.spriteOffsetX,
-      this.y - this.spriteHeight / 2 + this.spriteOffsetY, 
+      this.x - this.spriteWidth / 2 + this.spriteOffsetX + this.hitShakeOffsetX,
+      this.y - this.spriteHeight / 2 + this.spriteOffsetY + this.hitShakeOffsetY, 
       this.spriteWidth,
       this.spriteHeight
     );
+
+    // Restauramos para no afectar a TODO el juego
+    this.canvasObject.restore();
   }
 
   animateSprite () {
