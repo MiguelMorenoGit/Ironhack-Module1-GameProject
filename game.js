@@ -144,12 +144,14 @@ class Game {
   }
 
   checkAllCollisions(){
+    
     this.player.checkScreen();
+
     this.enemieChargerArray.forEach ((enemy, indexEnemy) =>{
-      if (enemy.x - enemy.size/2 <= 0 ){
-         this.enemieChargerArray.splice(indexEnemy,1);
-         this.player.updateScore(false);
-      };
+      if (enemy.x + enemy.spriteWidth / 2 < 0) {
+        this.enemies1.splice(indexEnemy, 1);
+        this.player.updateScore(false);
+      }
 
       // if(this.player.checkCollisionEnemy(enemy)){
       //   this.player.loseLive();

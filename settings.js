@@ -4,9 +4,9 @@ const CONFIG = {
 
   //------------DEBUG GLOBAL----------------
   debug: {
-    enabled: false,          // Activa/desactiva TODO el debug
-    showHitbox: false,
-    showSpriteBox: false,
+    enabled: true,          // Activa/desactiva TODO el debug
+    showHitbox: true,
+    showSpriteBox: true,
     showFPS: false,
   },
 

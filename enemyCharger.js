@@ -34,14 +34,14 @@ class EnemyCharger {
     this.hitboxHeight = 120; // Alto de la hitbox
 
     //------------SPRITES----------------
-    this.spriteWidth = 150; // Ancho con el que se dibuja visualmente el sprite en pantalla
-    this.spriteHeight = 150; // Alto con el que se dibuja visualmente el sprite en pantalla
+    this.spriteWidth =  this.frameWidth * 1.4; // Ancho con el que se dibuja visualmente el sprite en pantalla
+    this.spriteHeight =  this.frameHeight * 1.4; // Alto con el que se dibuja visualmente el sprite en pantalla
 
     //------------OFFSET DEL SPRITE----------------
     // Estos offsets sirven para mover visualmente el sprite
     // respecto al centro de la hitbox.
-    this.spriteOffsetX = 0; // Mueve el sprite en el eje X
-    this.spriteOffsetY = 0; // Mueve el sprite en el eje Y
+    this.spriteOffsetX = 10; // Mueve el sprite en el eje X
+    this.spriteOffsetY = 25; // Mueve el sprite en el eje Y
   };
 
   update() {
