@@ -186,9 +186,9 @@ class Player {
 
     if(this.isDead) return; // Si el jugador ha muerto, no dibujamos nada
 
-    this.drawHitbox(); // Dibujar la hitbox
     this.drawSpriteBox(); // Dibujar la caja que contiene el sprite en pantalla
     this.drawSprite(); // Dibujar el sprite del player en pantalla
+    this.drawHitbox(); // Dibujar la hitbox
 
   };
 
@@ -205,7 +205,7 @@ class Player {
 
     this.canvasObject.fillStyle = 'rgb(0, 0, 0, 0)'; 
 
-    if (this.gameConfig.debug.showHitbox) this.canvasObject.fillStyle = 'rgb(255, 0, 0, 0.5)';
+    if (this.gameConfig.debug.showHitbox) this.canvasObject.fillStyle = 'rgb(255, 0, 0, 0.6)';
 
     this.canvasObject.fillRect(
       this.x - this.hitboxWidth / 2,

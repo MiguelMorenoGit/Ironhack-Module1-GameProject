@@ -71,9 +71,9 @@ class EnemyCharger {
   }
 
   draw() {
-    this.drawHitbox(); // Dibujar la hitbox
     this.drawSpriteBox(); // Dibujar la caja que contiene el sprite en pantalla
     this.drawSprite(); // Dibujar el sprite del enemigo en pantalla
+    this.drawHitbox(); // Dibujar la hitbox al final para que quede por encima de la imagen
   };
 
   drawHitbox() {
@@ -87,7 +87,7 @@ class EnemyCharger {
 
     this.canvasObject.fillStyle = 'rgb(0, 0, 0, 0)';
 
-    if (this.gameConfig.debug.showHitbox) this.canvasObject.fillStyle = 'rgb(0, 255, 0, 0.5)';
+    if (this.gameConfig.debug.showHitbox) this.canvasObject.fillStyle = 'rgb(255, 0, 0, 0.6)';
 
     this.canvasObject.fillRect(
       this.x - this.hitboxWidth / 2,

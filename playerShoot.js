@@ -36,7 +36,7 @@ class PlayerShoot {
     //------------OFFSET DEL SPRITE----------------
     // Estos offsets sirven para mover visualmente el sprite
     // respecto al centro de la hitbox.
-    this.spriteOffsetX = 0; // Mueve el sprite en el eje X
+    this.spriteOffsetX = -20; // Mueve el sprite en el eje X
     this.spriteOffsetY = 0; // Mueve el sprite en el eje Y
 
     //------------SONIDO----------------
@@ -51,9 +51,9 @@ class PlayerShoot {
   };
 
   draw() {
-    this.drawHitbox(); // Dibujar la hitbox
     this.drawSpriteBox(); // Dibujar la caja que contiene el sprite en pantalla
     this.drawSprite(); // Dibujar el sprite del disparo en pantalla
+    this.drawHitbox(); // Dibujar la hitbox
   };
 
   drawHitbox() {
@@ -67,7 +67,7 @@ class PlayerShoot {
 
     this.canvasObject.fillStyle = 'rgb(0, 0, 0, 0)';
 
-    if (this.gameConfig.debug.showHitbox) this.canvasObject.fillStyle = 'rgb(255, 255, 0, 0.5)';
+    if (this.gameConfig.debug.showHitbox) this.canvasObject.fillStyle = 'rgb(255, 0, 0, 0.6)';
 
     this.canvasObject.fillRect(
       this.x - this.hitboxWidth / 2,
@@ -113,6 +113,9 @@ class PlayerShoot {
     // pero además aplicando spriteOffsetX y spriteOffsetY
     // para poder ajustar manualmente el sprite.
 
+    this.canvasObject.save();
+    this.canvasObject.globalAlpha = 0.8;
+
     this.canvasObject.drawImage(
       this.imgGif,
       this.frameWidth * this.currentFrame,
@@ -124,6 +127,8 @@ class PlayerShoot {
       this.spriteWidth,
       this.spriteHeight
     );
+
+    this.canvasObject.restore();
   }
 
   animateSprite() {
