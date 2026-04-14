@@ -27,6 +27,7 @@ class Game {
     // this.windSound = new Audio ("./sonidos/viento_en_un_canaveral_de_un_parque_1.mp3");
     this.enemySound = new Audio ("./sonidos/wreee.mp3");
     this.noEnemies = false;
+    //this.finalScore = 0;
     
 
   };
@@ -129,6 +130,7 @@ class Game {
     });
 
     if (this.isPaused) this.drawPauseScreen();
+    // if (this.isGameOver) this.drawGameOverScreen();
   
   };
 
@@ -149,7 +151,7 @@ class Game {
 
     this.enemieChargerArray.forEach ((enemy, indexEnemy) =>{
       if (enemy.x + enemy.spriteWidth / 2 < 0) {
-        this.enemies1.splice(indexEnemy, 1);
+        this.enemieChargerArray.splice(indexEnemy, 1);
         this.player.updateScore(false);
       }
 
@@ -171,7 +173,11 @@ class Game {
 
           if (this.player.lives === 0) {
             this.isGameOver = true;
-            this.onGameOver(this.player.score);
+            this.noEnemies = true; // Detener la generación de nuevos enemigos
+            this.player.isDead = true; // Marcar al jugador como muerto
+            this.player.lives = 0; // Aseguramos que las vidas no sean negativas
+
+            if(this.onGameOver) this.onGameOver(this.player.score);
           }
         }
       }
@@ -206,6 +212,7 @@ class Game {
       };
     });
   };
+
   gameOverCallback(callback){
     
     this.onGameOver = callback;

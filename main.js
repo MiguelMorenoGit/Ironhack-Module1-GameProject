@@ -1,3 +1,4 @@
+
 'use strict';
 
 const main = ()=>{
@@ -42,24 +43,49 @@ const main = ()=>{
     
   const buildGameScreen = ()=>{        // -------  INICIO GAMEOVERSCREEN  -------
     const GameScreen = buildDom(`
-    <section class="game-screen">
-    <div id="hub">
-      <h3 class="score"></h3>
-      <h3 class="live"></h3>
-    </div>
-    <canvas class="background-game">
-    </canvas>
-    <audio volume="0.5" autoplay  loop>
-      <source src="./sonidos/D1 - Go Straight (Original Version)-[AudioTrimmer.com].mp3">
-    <audio>
-    </section>
+      <div class="game-wrapper">
+        <section class="game-screen">
+          <div id="hub">
+            <h3 class="score"></h3>
+            <h3 class="live"></h3>
+          </div>
+
+          <canvas class="background-game"></canvas>
+
+          <section class="gameover-screen hidden">
+            <h1>Good job!!</h1>
+            <h3 class="final-score">Your score was :</h3>
+
+            <div class="end-buttons">
+              <button class="try-again">Try again!</button>
+              <button class="restart">Home</button>
+            </div>
+          </section>
+
+          <audio volume="0.3" autoplay loop>
+            <source src="./sonidos/D1 - Go Straight (Original Version)-[AudioTrimmer.com].mp3">
+          <audio>
+        </section>
+      </div>
+
     `);
+
+    
     const width = document.querySelector('.game-screen').offsetWidth;
     const height = document.querySelector('.game-screen').offsetHeight;
-
+    
     const scoreLabel = document.querySelector(".score");
     const playerLives = document.querySelector(".live");
     const canvasElement = document.querySelector('canvas');
+
+    const gameOverPanel = document.querySelector('.gameover-screen');
+    const finalScoreLabel = document.querySelector('.final-score');
+    const tryAgainButton = document.querySelector('.try-again');
+    const homeButton = document.querySelector('.restart');
+
+    tryAgainButton.addEventListener('click', buildGameScreen);
+    homeButton.addEventListener('click', buildSplashScreen);
+
     let enterPressed = false; // 🔥 control de enter para pause
 
     canvasElement.setAttribute('width',width);
@@ -73,8 +99,10 @@ const main = ()=>{
     // -------  CREAMOS EL JUEGO  -------//
 
     const game = new Game(canvasElement,updateScore,playerLives);
+
     game.gameOverCallback( (score) => {
-      buildGameOverScreen(score);
+      finalScoreLabel.innerHTML = "Your score is : " + score;
+      gameOverPanel.classList.remove('hidden');
     });
     game.startLoop();
 
@@ -97,6 +125,7 @@ const main = ()=>{
 
     document.addEventListener('keydown', togglePause);
     document.addEventListener('keyup', resetEnter);
+    
    
     
 
@@ -104,8 +133,8 @@ const main = ()=>{
     
     const setPlayerDirectionDown = (event) => {
 
-      if (game.isPaused) return; // ⛔ NO HACER NADA SI ESTÁ EN PAUSA
-
+      if (game.isPaused || game.isGameOver) return; // o hacer nada si el juego está en pausa o ha terminado
+      
       if(event.code === 'ArrowUp')game.player.up = true;
       if(event.code === 'ArrowDown')game.player.down = true;
       if(event.code === 'ArrowRight')game.player.right = true;
@@ -115,6 +144,16 @@ const main = ()=>{
 
     const setPlayerDirectionUp = (event) => {   
 
+      // Si el juego está en pausa o ha terminado, no hacemos nada
+      if (game.isGameOver) {
+        game.player.up = false;
+        game.player.down = false;
+        game.player.left = false;
+        game.player.right = false;
+        return;
+      }
+
+      // Al levantar la tecla, desactivamos el movimiento correspondiente, pero solo si el juego no ha terminado. Si el juego ha terminado, nos aseguramos de que el jugador no se mueva en absoluto.
       if(event.code === 'ArrowUp')game.player.up = false;
       if(event.code === 'ArrowDown')game.player.down = false;
       if(event.code === 'ArrowRight')game.player.right = false;
@@ -124,7 +163,7 @@ const main = ()=>{
 
     const setPlayerShoot = (e) => {
 
-      if (game.isPaused) return; // ⛔ NO HACER NADA SI ESTÁ EN PAUSA
+      if (game.isPaused || game.isGameOver) return; // o hacer nada si el juego está en pausa o ha terminado
       
       if(e.keyCode === 32 ){
         game.shoots.push(new PlayerShoot(game.canvas,game.player.x + 70,game.player.y+40));  
@@ -139,44 +178,44 @@ const main = ()=>{
 
     
 
-  const buildGameOverScreen = (score)=> {  // -------  INICIO GAMEOVERSCREEN  -------
-    const GameOverScreen = buildDom(`
-    <section class="gameover-screen">
-      <h1>Good job!!</h1>
-      <h3 class="final-score">Your score was :</h3>
+  //   const buildGameOverScreen = (score)=> {  // -------  INICIO GAMEOVERSCREEN  -------
+  //     const GameOverScreen = buildDom(`
+  //     <section class="gameover-screen">
+  //       <h1>Good job!!</h1>
+  //       <h3 class="final-score">Your score was :</h3>
 
-      <canvas class="background-gameover"></canvas>
-      <div class="end-buttons">
-        <button class="try-again">Try again!</button>
-        <button class="restart">Home</button>
-      </div>
-      <audio volume="0.5" autoplay  loop>
-      <source src="./sonidos/D1 - Go Straight (Original Version)-[AudioTrimmer.com].mp3">
-      <audio>
-    </section>
-    `);
+  //       <canvas class="background-gameover"></canvas>
+  //       <div class="end-buttons">
+  //         <button class="try-again">Try again!</button>
+  //         <button class="restart">Home</button>
+  //       </div>
+  //       <audio volume="0.5" autoplay  loop>
+  //       <source src="./sonidos/D1 - Go Straight (Original Version)-[AudioTrimmer.com].mp3">
+  //       <audio>
+  //     </section>
+  //     `);
 
-    const Score = document.querySelector('.final-score');
-    Score.innerHTML = "Your score is : " + score;
+  //     const Score = document.querySelector('.final-score');
+  //     Score.innerHTML = "Your score is : " + score;
 
-    const startButton = document.querySelector('.restart');
-    startButton.addEventListener('click',buildSplashScreen);
+  //     const startButton = document.querySelector('.restart');
+  //     startButton.addEventListener('click',buildSplashScreen);
 
-    const tryAgainButton = document.querySelector('.try-again');
-    tryAgainButton.addEventListener('click',buildGameScreen);
+  //     const tryAgainButton = document.querySelector('.try-again');
+  //     tryAgainButton.addEventListener('click',buildGameScreen);
 
-    const width = document.querySelector('.gameover-screen').offsetWidth;
-    const height = document.querySelector('.gameover-screen').offsetHeight;
+  //     const width = document.querySelector('.gameover-screen').offsetWidth;
+  //     const height = document.querySelector('.gameover-screen').offsetHeight;
 
-    const canvasElement = document.querySelector('canvas');
+  //     const canvasElement = document.querySelector('canvas');
 
-    canvasElement.setAttribute('width',width);
-    canvasElement.setAttribute('height',height);
-    const background = new Background(canvasElement);
-    background.startLoop();
+  //     canvasElement.setAttribute('width',width);
+  //     canvasElement.setAttribute('height',height);
+  //     const background = new Background(canvasElement);
+  //     background.startLoop();
 
-  };  // -------  FINAL GAMEOVERSCREEN  -------
-    
+  //   };  // -------  FINAL GAMEOVERSCREEN  -------
+      
 
   buildSplashScreen();
 

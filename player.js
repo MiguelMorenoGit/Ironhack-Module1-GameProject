@@ -62,6 +62,8 @@ class Player {
     this.spriteOffsetX = -30; // Mueve el sprite en el eje X 
     this.spriteOffsetY = 0; // Mueve el sprite en el eje Y
 
+    this.isDead = false; // Indicar si el player ha muerto
+
   };
 
   update(){
@@ -182,6 +184,8 @@ class Player {
 
   draw () {
 
+    if(this.isDead) return; // Si el jugador ha muerto, no dibujamos nada
+
     this.drawHitbox(); // Dibujar la hitbox
     this.drawSpriteBox(); // Dibujar la caja que contiene el sprite en pantalla
     this.drawSprite(); // Dibujar el sprite del player en pantalla
@@ -197,6 +201,7 @@ class Player {
     
     // Como this.x y this.y son el CENTRO de la hitbox,
     // para dibujar el rectángulo tenemos que restar la mitad del ancho y alto.
+    if(this.isDead) return; // Si el jugador ha muerto, no dibujamos nada
 
     this.canvasObject.fillStyle = 'rgb(0, 0, 0, 0)'; 
 
@@ -313,6 +318,8 @@ class Player {
     // pero el enemigo sigue usando enemy.size.
     // Más adelante se puede mejorar para que el enemigo
     // tenga también hitbox propia.
+
+    if(this.isDead) return; // Si el jugador ha muerto, no dibujamos nada
 
     return (
 
