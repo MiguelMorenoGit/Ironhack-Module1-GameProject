@@ -28,27 +28,30 @@ class Game {
     this.enemySound = new Audio ("./sonidos/wreee.mp3");
     this.noEnemies = false;
     //this.finalScore = 0;
+    this.animationId = null; // Para guardar el ID de la animación y poder cancelarla si es necesario
     
 
   };
 
+  // Aquí van los métodos de la clase Game, como startLoop, updateCanvas, clearCanvas, drawCanvas, etc.
   startLoop(){
-    
+
+    if (this.animationId) return; // evita duplicados
 
     this.player = new Player(this.canvas, 3);
-    this.parallax2 = new Parallax2(this.canvas);
     this.parallax1 = new Parallax1(this.canvas);
-    this.isPaused = false; // Estado inicial de pausa
+    this.parallax2 = new Parallax2(this.canvas);
     
     const loop = () => {
-
       // Solo actualizamos lógica del juego si NO está en pausa
       if (!this.isPaused) {
-
+  
         if (!this.noEnemies && this.enemieChargerArray.length < this.enemieChargerMax) {
           if(Math.random() > this.enemyCount) {
-            const enemyMarginY = 200;
-            const y = Math.random() * (this.canvas.height - enemyMarginY/2) + enemyMarginY/2;
+            const enemy = new EnemyCharger(this.canvas, 100, this.speedGame);
+            const enemyMarginX = enemy.spriteWidth;
+            const enemyMarginY = enemy.spriteHeight;
+            const y = Math.random() * (this.canvas.height - enemyMarginY) + enemyMarginY;
             this.enemieChargerArray.push(new EnemyCharger(this.canvas,y,this.speedGame));
           };
         }
@@ -59,7 +62,6 @@ class Game {
           this.clouds.push(new Cloud(this.canvas,y));
         };
 
-      
         this.checkAllCollisions();
         this.updateCanvas();
         this.updateScoreInMain(this.player.score);
@@ -69,14 +71,20 @@ class Game {
       // Esto sí se hace siempre, también en pausa
       this.clearCanvas ();
       this.drawCanvas ();
-      window.requestAnimationFrame(loop);
-      
+      this.animationId = window.requestAnimationFrame(loop);
       
     };
     
-    window.requestAnimationFrame(loop);
+    this.animationId = window.requestAnimationFrame(loop);
 
   };
+
+  stopLoop(){
+    if(this.animationId) {
+      window.cancelAnimationFrame(this.animationId);
+      this.animationId = null;
+    }
+  }
 
   updateCanvas(){
     if (this.isPaused) return;

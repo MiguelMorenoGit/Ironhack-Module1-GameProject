@@ -7,11 +7,6 @@ class EnemyCharger {
     this.canvas = canvas; // Guardamos el canvas completo para poder consultar su ancho y alto
     this.canvasObject = this.canvas.getContext('2d'); // Guardamos el contexto 2D, que es lo que usamos para dibujar
 
-    //------------POSICION DEL ENEMIGO EN PANTALLA----------------
-    // Igual que en Player, x e y representan el CENTRO de la hitbox
-    this.x = this.canvas.width;
-    this.y = y;
-
     //------------MOVIMIENTO DEL ENEMIGO----------------
     this.speed = speed; // Velocidad horizontal del enemigo
     this.speedHeight = 2; // Velocidad del movimiento vertical en zig-zag
@@ -42,6 +37,11 @@ class EnemyCharger {
     // respecto al centro de la hitbox.
     this.spriteOffsetX = 10; // Mueve el sprite en el eje X
     this.spriteOffsetY = 25; // Mueve el sprite en el eje Y
+
+    //------------POSICION DEL ENEMIGO EN PANTALLA----------------
+    // Igual que en Player, x e y representan el CENTRO de la hitbox
+    this.x = this.canvas.width + this.spriteOffsetX; // Empezamos fuera de la pantalla, a la derecha
+    this.y = y;
   };
 
   update() {

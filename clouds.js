@@ -1,4 +1,6 @@
 'use strict';
+
+
 class Cloud {
   constructor(canvas,y){
       this.size = 10;
@@ -8,6 +10,16 @@ class Cloud {
       this.y = y;
       this.speed = 40;
       this.direction = -1;
+
+      // entre 0.3 y 0.8 aprox
+      this.opacity = Math.random() * 0.5 + 0.3; 
+
+      this.color = Math.random() > 0.5
+      ? `rgba(255, 165, 0, ${this.opacity})`
+      : `rgba(255, 0, 0, ${this.opacity})`;
+
+      // Elegimos un color aleatorio UNA sola vez al crear la nube
+      this.color = Math.random() > 0.5 ? 'orange' : 'red';
   };
 
   update (){
@@ -17,7 +29,7 @@ class Cloud {
 
   draw(){
 
-    this.canvasObject.fillStyle = 'orange';
+    this.canvasObject.fillStyle = this.color; // Usamos el color elegido al crear la nube
     this.canvasObject.fillRect(this.x,this.y - this.size/2, this.size, this.size);
 
   };

@@ -1,4 +1,5 @@
 'use strict';
+
 class Parallax1 {
   constructor(canvas){
 
