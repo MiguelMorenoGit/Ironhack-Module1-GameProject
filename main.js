@@ -157,11 +157,6 @@ const main = ()=>{
 
     currentGame.startLoop();
 
-    tryAgainButton.addEventListener('click', buildGameScreen);
-    homeButton.addEventListener('click', buildSplashScreen);
-
-    // -------  PAUSE  -------//
-
     currentGame.isPaused = false; // Estado inicial
 
     const togglePause = (event) => {
@@ -172,17 +167,19 @@ const main = ()=>{
       }
     };
 
+
     const resetEnter = (event) => {
       if (event.code === 'Enter') {
         enterPressed = false;
       }
     };
 
+
     document.addEventListener('keydown', togglePause);
     document.addEventListener('keyup', resetEnter);
     
-   
-    
+    tryAgainButton.addEventListener('click', buildGameScreen);
+    homeButton.addEventListener('click', buildSplashScreen);
 
     // -------  CONTROLES  -------// puedes meter todo en una funcion const setmove y hacer al final un addeventlistener(setmove que llame a todos)
     

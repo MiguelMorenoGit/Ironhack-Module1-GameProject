@@ -147,7 +147,7 @@ class Game {
     this.canvasObject.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
     this.canvasObject.fillStyle = 'white';
-    this.canvasObject.font = '60px Arial';
+    this.canvasObject.font = '60px PressStart2P';
     this.canvasObject.textAlign = 'center';
     this.canvasObject.fillText('PAUSE', this.canvas.width / 2, this.canvas.height / 2);
     
@@ -195,7 +195,6 @@ class Game {
           this.explosions.push(new Explosion (this.canvas,shoot.x,shoot.y, 30, 220));
           this.shoots.splice(index,1);
           this.enemieChargerArray.splice(indexEnemy,1);
-          console.log(enemy.x,enemy.y);
           this.enemySound.currentTime =0;this.enemySound.play();this.enemySound.volume = 0.3;
           this.player.updateScore(true);
           this.speedGame = this.speedGame+this.speedIncrease;
