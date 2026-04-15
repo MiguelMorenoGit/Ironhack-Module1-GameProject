@@ -36,8 +36,9 @@ class Game {
   // Aquí van los métodos de la clase Game, como startLoop, updateCanvas, clearCanvas, drawCanvas, etc.
   startLoop(){
 
+    
     if (this.animationId) return; // evita duplicados
-
+    //this.resetAllVariables();
     this.player = new Player(this.canvas, 3);
     this.parallax1 = new Parallax1(this.canvas);
     this.parallax2 = new Parallax2(this.canvas);
@@ -147,10 +148,10 @@ class Game {
     this.canvasObject.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
     this.canvasObject.fillStyle = 'white';
-    this.canvasObject.font = '60px PressStart2P';
+    this.canvasObject.font = "60px 'Press Start 2P'";
     this.canvasObject.textAlign = 'center';
     this.canvasObject.fillText('PAUSE', this.canvas.width / 2, this.canvas.height / 2);
-    
+
   }
 
   checkAllCollisions(){
@@ -206,23 +207,51 @@ class Game {
       });
     });
 
-    this.shoots.forEach ((shoot, index) =>{
-      if (shoot.x + shoot.size/2 > this.canvas.width ){
-         this.shoots.splice(index,1);
-      };
-    
+    this.shoots = this.shoots.filter((shoot) => {
+      return shoot.x - shoot.hitboxWidth / 2 <= this.canvas.width;
     });
 
-    this.clouds.forEach ((cloud, index) =>{
-      if (cloud.x - cloud.size/2 <= 0 ){
-         this.clouds.splice(index,1);
-      };
+    this.clouds = this.clouds.filter((cloud) => {
+      return cloud.x - cloud.size / 2 > 0;
     });
+
+    console.log('enemies: ', this.enemieChargerArray.length);
+    console.log('shoots: ', this.shoots.length);
   };
 
+  // resetAllVariables(canvas,callbackScore,playerLives) {
+
+  //   this.isPaused = false;
+  //   this.canvas= canvas;
+  //   this.canvasObject = this.canvas.getContext('2d');
+  //   this.player = null;
+  //   //this.playerNewLives = playerLives;
+  //   this.playerLives=playerLives;
+  //   this.parallax1 = null;
+  //   this.parallax2 = null;
+  //   this.shoots =[];
+  //   this.enemieChargerArray= [];
+  //   this.enemieChargerMax= 6;
+  //   this.clouds = [];
+  //   this.explosions = [];
+  //   this.isGameOver = false;
+  //   this.onGameOver = null;
+  //   this.updateScoreInMain = callbackScore;
+  //   this.speedIncrease = 0.04;
+  //   this.speedGame = 3;
+  //   this.enemyIncrease = -0.0001;
+  //   this.enemyCount = 0.98;
+  //   // this.gameSound= new Audio ("./sonidos/D1 - Go Straight (Original Version)-[AudioTrimmer.com].mp3");
+  //   // this.windSound = new Audio ("./sonidos/viento_en_un_canaveral_de_un_parque_1.mp3");
+  //   this.enemySound = new Audio ("./sonidos/wreee.mp3");
+  //   this.noEnemies = false;
+  //   //this.finalScore = 0;
+  //   this.animationId = null; // Para guardar el ID de la animación y poder cancelarla si es necesari0
+
+  // }
+
   gameOverCallback(callback){
-    
     this.onGameOver = callback;
-    
+   
   };
 };

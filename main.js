@@ -1,4 +1,4 @@
-
+// @ts-nocheck
 'use strict';
 
 const main = ()=>{
@@ -12,6 +12,7 @@ const main = ()=>{
   let setPlayerDirectionDown = null;
   let setPlayerDirectionUp = null;
   let setPlayerShoot = null;
+  let enterPressed = false; // 🔥 control de enter para pause
 
   const buildDom = (html) => {          // -------  INICIO BUILDDOM  -------
     const main = document.querySelector('main');
@@ -66,32 +67,30 @@ const main = ()=>{
     </section>
     `);
 
-    const startButton = document.querySelector('button');
-    startButton.addEventListener('click',buildGameScreen);
-    
+    // Configuramos el canvas para el fondo animado
     const width = document.querySelector('.splash-screen').offsetWidth;
     const height = document.querySelector('.splash-screen').offsetHeight;
-    
-    
-    const canvasElement = document.querySelector('canvas');
-    canvasElement.setAttribute('width',width);
-    canvasElement.setAttribute('height',height);
-    
-   
 
+    // Configuramos el canvas para el fondo animado
+    const canvasElement = document.querySelector('canvas'); // Canvas para el fondo animado
+    canvasElement.setAttribute('width',width); // Configuramos el tamaño del canvas para que ocupe toda la pantalla
+    canvasElement.setAttribute('height',height); // Configuramos el tamaño del canvas para que ocupe toda la pantalla
+    
+    // Botón para iniciar el juego, al hacer click se construye la pantalla del juego
+    const startButton = document.querySelector('button'); 
+    startButton.addEventListener('click',buildGameScreen); // Al hacer click en el botón, construimos la pantalla del juego
+    
     // Guardamos la referencia real del fondo actual */
     currentBackground = new Background(canvasElement);
     currentBackground.startLoop();
-
-
   };
 
   
-    
   const buildGameScreen = ()=>{
 
     // Antes de crear una partida nueva, limpiamos la anterior 
-    stopCurrentScene();        
+    stopCurrentScene();    
+    setPauseEventListeners(); // Configuramos los listeners para el control de pausa    
     
     // -------  INICIO GAMEOVERSCREEN  -------
     const GameScreen = buildDom(`
@@ -122,68 +121,40 @@ const main = ()=>{
 
     `);
 
+    //-------  CONFIGURACIÓN DEL CANVAS  -------//
     
     const width = document.querySelector('.game-screen').offsetWidth;
     const height = document.querySelector('.game-screen').offsetHeight;
-    
-    const scoreLabel = document.querySelector(".score");
-    const playerLives = document.querySelector(".live");
     const canvasElement = document.querySelector('canvas');
-
-    const gameOverPanel = document.querySelector('.gameover-screen');
-    const finalScoreLabel = document.querySelector('.final-score');
-    const tryAgainButton = document.querySelector('.try-again');
-    const homeButton = document.querySelector('.restart');
-
-    let enterPressed = false; // 🔥 control de enter para pause
-
+    
     canvasElement.setAttribute('width',width);
     canvasElement.setAttribute('height',height);
-
-
-    const updateScore = (score) => {
-      scoreLabel.innerHTML = "  Your score :  " + score;
-    }
-
+    
     // -------  CREAMOS EL JUEGO  -------//
-
+    
+    const gameOverPanel = document.querySelector('.gameover-screen');
+    const finalScoreLabel = document.querySelector('.final-score');
+    const playerLives = document.querySelector(".live");
+    const scoreLabel = document.querySelector(".score");
+    const updateScore = (score) => { return scoreLabel.innerHTML = "  Your score :  " + score; };
+    
     currentGame = new Game(canvasElement, updateScore, playerLives);
+    //currentGame.resetAllVariables(canvasElement, updateScore, playerLives); // Inicializamos las variables del juego
     currentBackground = null; // El fondo del juego se maneja dentro de la clase Game, así que aquí ya no lo necesitamos
-
+    
     currentGame.gameOverCallback( (score) => {
       finalScoreLabel.innerHTML = "Your score is : " + score;
       gameOverPanel.classList.remove('hidden');
     });
-
-    currentGame.startLoop();
-
-    currentGame.isPaused = false; // Estado inicial
-
-    const togglePause = (event) => {
-      if (!currentGame) return;
-      if (event.code === 'Enter' && !enterPressed) {
-        enterPressed = true;
-        currentGame.isPaused = !currentGame.isPaused;
-      }
-    };
-
-
-    const resetEnter = (event) => {
-      if (event.code === 'Enter') {
-        enterPressed = false;
-      }
-    };
-
-
-    document.addEventListener('keydown', togglePause);
-    document.addEventListener('keyup', resetEnter);
     
-    tryAgainButton.addEventListener('click', buildGameScreen);
-    homeButton.addEventListener('click', buildSplashScreen);
-
+    currentGame.startLoop();
+    currentGame.isPaused = false; // Estado inicial
+    
+    setTryAgainAndHomeEventListeners(); // Configuramos los listeners para los botones de "Try Again" y "Home" en la pantalla de Game Over
+    
     // -------  CONTROLES  -------// puedes meter todo en una funcion const setmove y hacer al final un addeventlistener(setmove que llame a todos)
     
-    const setPlayerDirectionDown = (event) => {
+    setPlayerDirectionDown = (event) => {
 
       if (currentGame.isPaused || currentGame.isGameOver) return; // o hacer nada si el juego está en pausa o ha terminado
       
@@ -194,7 +165,8 @@ const main = ()=>{
     };
     document.addEventListener('keydown', setPlayerDirectionDown);
 
-    const setPlayerDirectionUp = (event) => {   
+    
+    setPlayerDirectionUp = (event) => {   
 
       // Si el juego está en pausa o ha terminado, no hacemos nada
       if (currentGame.isGameOver) {
@@ -205,15 +177,15 @@ const main = ()=>{
         return;
       }
 
-      // Al levantar la tecla, desactivamos el movimiento correspondiente, pero solo si el juego no ha terminado. Si el juego ha terminado, nos aseguramos de que el jugador no se mueva en absoluto.
-      if(event.code === 'ArrowUp')currentGame.player.up = false;
+      if(event.code === 'ArrowUp')currentGame.player.up = false; // Al soltar la tecla, dejamos de movernos en esa dirección
       if(event.code === 'ArrowDown')currentGame.player.down = false;
       if(event.code === 'ArrowRight')currentGame.player.right = false;
       if(event.code === 'ArrowLeft')currentGame.player.left = false;  
     };
     document.addEventListener('keyup', setPlayerDirectionUp);
 
-    const setPlayerShoot = (e) => {
+    // Control para disparar, solo si el juego no está en pausa ni ha terminado
+    setPlayerShoot = (e) => {
 
       if (currentGame.isPaused || currentGame.isGameOver) return; // o hacer nada si el juego está en pausa o ha terminado
       
@@ -224,51 +196,39 @@ const main = ()=>{
     };
     document.addEventListener('keydown', setPlayerShoot);
     
-  };   // -------  FINAL GAMESCREEN  -------
+  };  
+  
+  const setPauseEventListeners = () => {
 
-  //const finalScore= scoreLabel;
+    togglePause = (event) => {
+      if (!currentGame) return;
+      if (event.code === 'Enter' && !enterPressed) {
+        enterPressed = true;
+        currentGame.isPaused = !currentGame.isPaused;
+      }
+    };
 
+
+    resetEnter = (event) => {
+      if (event.code === 'Enter') {
+        enterPressed = false;
+      }
+    };
+
+    document.addEventListener('keydown', togglePause);
+    document.addEventListener('keyup', resetEnter);
+  }
+
+  const setTryAgainAndHomeEventListeners = () => {
+    // Configuramos los botones de "Try Again" y "Home" en la pantalla de Game Over
+    const tryAgainButton = document.querySelector('.try-again');
+    const homeButton = document.querySelector('.restart');
     
+    tryAgainButton.addEventListener('click', buildGameScreen);
+    homeButton.addEventListener('click', buildSplashScreen);
+  }
 
-  //   const buildGameOverScreen = (score)=> {  // -------  INICIO GAMEOVERSCREEN  -------
-  //     const GameOverScreen = buildDom(`
-  //     <section class="gameover-screen">
-  //       <h1>Good job!!</h1>
-  //       <h3 class="final-score">Your score was :</h3>
-
-  //       <canvas class="background-gameover"></canvas>
-  //       <div class="end-buttons">
-  //         <button class="try-again">Try again!</button>
-  //         <button class="restart">Home</button>
-  //       </div>
-  //       <audio volume="0.5" autoplay  loop>
-  //       <source src="./sonidos/D1 - Go Straight (Original Version)-[AudioTrimmer.com].mp3">
-  //       <audio>
-  //     </section>
-  //     `);
-
-  //     const Score = document.querySelector('.final-score');
-  //     Score.innerHTML = "Your score is : " + score;
-
-  //     const startButton = document.querySelector('.restart');
-  //     startButton.addEventListener('click',buildSplashScreen);
-
-  //     const tryAgainButton = document.querySelector('.try-again');
-  //     tryAgainButton.addEventListener('click',buildGameScreen);
-
-  //     const width = document.querySelector('.gameover-screen').offsetWidth;
-  //     const height = document.querySelector('.gameover-screen').offsetHeight;
-
-  //     const canvasElement = document.querySelector('canvas');
-
-  //     canvasElement.setAttribute('width',width);
-  //     canvasElement.setAttribute('height',height);
-  //     const background = new Background(canvasElement);
-  //     background.startLoop();
-
-  //   };  // -------  FINAL GAMEOVERSCREEN  -------
-      
-
+  
   buildSplashScreen();
 
 
