@@ -25,15 +25,10 @@ class Parallax1 {
   draw(){                     //  img        positionx    position y    tamaño en x    tamaño en y
 
    
-    this.canvasObject.drawImage(this.img, this.x, this.canvas.height/1.5,this.img.width,this.img.height/1.5);
-    this.canvasObject.drawImage(this.img, this.x + this.img.width, this.canvas.height/1.5,this.img.width,this.img.height/1.5);
+    this.canvasObject.drawImage(this.img, this.x, this.canvas.height/1.6,this.img.width,this.img.height/1.15);
+    this.canvasObject.drawImage(this.img, this.x + this.img.width, this.canvas.height/1.6,this.img.width,this.img.height/1.15);
    
-   
-
-
-
-
-
+  
   };
 };
 
