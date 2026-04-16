@@ -1,147 +1,130 @@
-# Nombre del Proyecto
-PIG radius wars
-## Descripción
- Arcade de naves donde podras enfrentarte a una horda de enemigos que no dejaran de atacarte.
- Para poder sobrevivir deberas esquivar a los enemigos y sus ataques haciendo uso de tu capacidad para moverte en 8 direcciones diferentes, y destruir al enemigo con una potente rafaga de disparos. 
- Tu unico objetivo sera SOBREVIVIR.
- Suerte!
-## MVP - Tecnología (DOM - CANVAS)
+# PIG Radius Wars
 
- un videojuego que:
- - tendra un PLAYER;
-    - que podra moverse en 4 DIRECCIONES. 
-    - que podra DISPARAR una rafaga de disparos.
-    - los disparos podran colisionar con el ENEMIGO destruyendolo.
-- tendra minimo un TIPO de ENEMIGO ;
-    - apareceran desde el lado derecho de la pantalla.
-    - se dirigiran al lado izquierdo y desparaceran.
-    - podran colisionar con el enemigo.
-    - esta colision restara una vida al PLAYER.
+**2D Arcade Shooter built with JavaScript and Canvas**
 
-- tendra 3 STAGES:
-    - Start
-    - Game
-    - Game over-restart
+PIG Radius Wars is a browser-based arcade shooter developed with **HTML, CSS, and Vanilla JavaScript** using the **Canvas API**.
 
-## Backlog
+In the game, you control a flying pig equipped for battle, fighting to survive incoming enemy waves while dodging attacks, shooting back, and trying to achieve the highest score possible.
 
-FONDO DE PANTALLA;
-- generar scroll en el fondo para generar sensacion de velocidad
+---
 
-PLAYER;
-- movimiento en 8 direcciones.
+## Demo
 
-ENEMIGO 2;
-- se movera igual que el enemigo 1 pero:
-- parecera siempre por el lado inferior derecho de la pantalla
-- ira mas despacio que el enemigo 1
-- podra DISPARAR:
-    - el DISPARO se originara en la posicion actual del enemigo.
-    - el DISPARO se dirigira a la posicion actual del PLAYER y no se modificara.
-    - el DISPARO podra colisionar con el player, restandole una vida.
+- **YouTube Gameplay:** ADD_YOUR_YOUTUBE_LINK_HERE
+- **Live Demo:** ADD_YOUR_DEPLOY_LINK_HERE
+- **GitHub Repository:** https://github.com/MiguelMorenoGit/Ironhack-Module1-GameProject
+
+---
+
+## About the Project
+
+This project was built as a browser game to strengthen core front-end and game development skills, with a focus on:
+
+- **DOM manipulation**
+- **Canvas rendering**
+- **Object-oriented programming**
+- **Game loop architecture**
+- **Collision systems**
+- **Animation handling**
+- **Player input and game states**
+
+As development progressed, I continuously refined the game by fixing bugs, improving performance, polishing collisions, and enhancing the overall gameplay experience.
+
+---
+
+## Main Features
+
+- 2D player movement
+- Projectile shooting system
+- Lives and score system
+- Enemy spawning and movement patterns
+- Animated explosion effects
+- Pause and resume system
+- Game over screen
+- Parallax scrolling background
+- Debug tools for hitboxes and sprite boxes
+
+---
+
+## Controls
+
+- **Arrow Up** — Move up
+- **Arrow Down** — Move down
+- **Arrow Left** — Move left
+- **Arrow Right** — Move right
+- **Space** — Shoot
+- **Enter** — Pause / Resume
+
+---
+
+## Tech Stack
+
+- **HTML5**
+- **CSS3**
+- **JavaScript (Vanilla JS)**
+- **Canvas API**
+
+---
+
+## Project Structure
+
+```bash
+.
+├── index.html
+├── style.css
+├── main.js
+├── game.js
+├── player.js
+├── playerShoot.js
+├── enemyCharger.js
+├── explosion.js
+├── background.js
+├── parallax1.js
+├── parallax2.js
+├── clouds.js
+├── assets.js
+└── settings.js
+
+## What I Improved
+
+During development, I iterated on several areas to improve the quality and polish of the game:
+
+- Fixed restart and performance issues
+- Improved cleanup of event listeners and animation loops
+- Refined collisions between player, enemies, and projectiles
+- Separated hitbox logic from visual sprite dimensions
+- Added temporary invincibility after taking damage
+- Added blinking and transparency feedback on hit
+- Improved pause and game over presentation
+
+---
+
+## Future Improvements
+
+- New enemy types
+- Enemy shooting mechanics
+- Power-ups
+- Better difficulty balancing
+- More polished sound design
+- Settings/options menu
+- Improved responsive support
+
+---
+
+## Author
+
+**Miguel Ángel Moreno**
+
+- **GitHub:** https://github.com/MiguelMorenoGit
+- **LinkedIn:** ADD_YOUR_LINKEDIN_HERE
+
+---
+
+## Portfolio Note
+
+This project is part of my game development portfolio and showcases my ability to build interactive gameplay systems with JavaScript, manage game states, handle collisions and animations, and create complete browser-based experiences using Canvas.
 
 
-## Estructuras de Datos
-
-
-Class Game;
-- startLoop()
-- updateCanvas()
-- clearCanvas()
-- drawCanvas()
-- checkAllCollisions()
-- gameOverCallback()
-
-Class Player;
-- update()
-- draw()
-- setdirection()
-- checkScreen()
-- checkCollisionEnemy()
-- loselive()
-
-Class PlayerShoot;
-- update()
-- draw()
-
-Class Enemy1;
-- update()
-- draw()
-
-
-## States y States Transitions
-
-Definicion del las transiciones del juego y del main.
-
-- splashScreen
-- gameScreen
-- gameoverScreen
----- NO WINSCREEN FOR ANYBODY -----
-
- function Main();
-- buildDom()
-- buildSplashScreen()
-- buildGameScreen()
-- buildGameOver()
-
-## Task
-
-0.prepar archivos js,html y css
-
-1.Definir main.js y construir sus funciones
-1.1 construirlas 3 pantallas dom
-1.2 transition: conectar con un click las 3 pantallas
-
-2.definir Game.js y construir sus funciones.
-2.1 construir el entorno d ejeugo
-
-3.definir Player.js y construir sus funciones
-3.1 construir Player
-3.2 Movimiento Player
-// sin construir collissions
-
-4.definir playerShoot.js y construir sus funciones
-4.1 Construir playerShoot
-4.2 movimiento playerShoot
-// sin construir collissions 
-
-5.definir Enemy1.js y construir sus funciones
-5.1 Construir Enemy1
-5.2 movimiento Enemy1
-// sin constrir collissions
-
-6. definir collissions en:
-  6.0 game.js   
-  6.1 player.js
-  6.2 playershoot.js
-  6.3 enemy1.js
-
-
-
-
-## Links
-
-### Miguel Angel Moreno
-
-[Link url](www.linkedin.com/in/miguel-angel-moreno-architect)
-
-### Git
-
-Especificar las url del proyecto y del deploy
-
-[Link Repositorio](https://github.com/MiguelMorenoGit/Ironhack-Module1-GameProject)
-
-[Link Deploy](http://github.com)
-
-### Slides.com
-
-Especificar la url de la presentacion
-
-[Link Slides.com](http://slides.com)
-
-## Instrucciones del juego 
-
-Al finalizar el juego generar las instrucciones
 
 
 
