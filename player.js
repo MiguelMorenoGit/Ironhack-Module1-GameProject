@@ -114,7 +114,6 @@ class Player {
 
     // Controlamos el parpadeo del sprite durante la invencibilidad
     this.isVisible = Math.floor(elapsed / this.gameConfig.player.blinkInterval) % 2 === 0;
-    console.log("Is Visible: ", this.isVisible);
     
     // Fin de la invencibilidad
     if (elapsed >= this.gameConfig.player.invincibleDuration) {

@@ -40,8 +40,8 @@ class Game {
     if (this.animationId) return; // evita duplicados
     //this.resetAllVariables();
     this.player = new Player(this.canvas, 3);
-    this.parallax1 = new Parallax1(this.canvas);
     this.parallax2 = new Parallax2(this.canvas);
+    this.parallax1 = new Parallax1(this.canvas);
     
     const loop = () => {
       // Solo actualizamos lógica del juego si NO está en pausa
@@ -215,8 +215,8 @@ class Game {
       return cloud.x - cloud.size / 2 > 0;
     });
 
-    console.log('enemies: ', this.enemieChargerArray.length);
-    console.log('shoots: ', this.shoots.length);
+    //console.log('enemies: ', this.enemieChargerArray.length);
+    //console.log('shoots: ', this.shoots.length);
   };
 
   // resetAllVariables(canvas,callbackScore,playerLives) {

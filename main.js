@@ -58,8 +58,10 @@ const main = ()=>{
     const splashScreen = buildDom(`
     <section class="splash-screen">
       <img class="name" src="./images/NOMBRE_1.png" alt="name-game">
-      <img class="keyboard" src="./images/keyboard.png">
-      <button>Press for Play</button>
+      <div class="instructions">
+        <img class="keyboard" src="./images/keyboard.png">
+        <button>Press for Play</button>
+      </div>
       <canvas class="background-splash"></canvas> 
       <audio volume="0.5" autoplay  loop>
       <source src="./sonidos/D1 - Go Straight (Original Version)-[AudioTrimmer.com].mp3">

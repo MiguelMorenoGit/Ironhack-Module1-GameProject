@@ -14,11 +14,11 @@ class Background {
       throw new Error('No se pudo obtener el contexto 2D del canvas en Background');
     }
 
-    /** @type {null | Parallax1} */
-    this.parallax1 = null;
-
     /** @type {null | Parallax2} */
     this.parallax2 = null;
+
+    /** @type {null | Parallax1} */
+    this.parallax1 = null;
 
     /** @type {Cloud[]} */
     this.clouds = [];
@@ -40,9 +40,10 @@ class Background {
     // Evita lanzar 2 loops del mismo background
     if (this.animationId !== null) return;
     
+    this.isRunning = true;
     this.parallax2 = new Parallax2(this.canvas);
     this.parallax1 = new Parallax1(this.canvas);
-    this.isRunning = true;
+    
     
     
     const loop = () => {
@@ -55,10 +56,10 @@ class Background {
         this.clouds.push(new Cloud(this.canvas,y));
       };
 
-      this.clearCanvas ();
-      this.drawCanvas ();
       this.checkAllCollisions();
       this.updateCanvas();
+      this.clearCanvas ();
+      this.drawCanvas ();
 
       // Guardamos el nuevo animationId
       this.animationId = window.requestAnimationFrame(loop);
@@ -85,8 +86,8 @@ class Background {
 
   updateCanvas(){
     
-    if(this.parallax1) this.parallax1.update();
     if(this.parallax2) this.parallax2.update();
+    if(this.parallax1) this.parallax1.update();
     
     this.clouds.forEach((cloud)=>{cloud.update()}); // actualizamos las nubes
   
@@ -99,8 +100,8 @@ class Background {
 
   drawCanvas(){
 
-    if (this.parallax1) this.parallax1.draw();
     if (this.parallax2) this.parallax2.draw();
+    if (this.parallax1) this.parallax1.draw();
     
     this.clouds.forEach((cloud)=>{cloud.draw()}); // dibujamos las nubes
   };

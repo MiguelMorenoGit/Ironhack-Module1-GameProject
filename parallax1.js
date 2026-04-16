@@ -19,7 +19,7 @@ class Parallax1 {
     this.x = this.x + this.speed;
     this.x = this.x % this.img.width ; // para que se repita todo el rato
     //this.x = 2000;
-
+    console.log('update parallax 1');
   };
 
   draw(){                     //  img        positionx    position y    tamaño en x    tamaño en y
