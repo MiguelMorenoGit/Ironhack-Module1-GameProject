@@ -67,6 +67,8 @@ As development progressed, I continuously refined the game by fixing bugs, impro
 ---
 
 ## Project Structure
+
+```bash
 .
 ├── index.html
 ├── style.css
@@ -82,7 +84,7 @@ As development progressed, I continuously refined the game by fixing bugs, impro
 ├── clouds.js
 ├── assets.js
 └── settings.js
-
+```
 ---
 
 ## What I Improved
