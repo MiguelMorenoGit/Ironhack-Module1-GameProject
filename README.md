@@ -12,7 +12,7 @@ In the game, you control a flying pig equipped for battle, fighting to survive i
 
 - **YouTube Gameplay:** ADD_YOUR_YOUTUBE_LINK_HERE
 - **Live Demo:** https://miguelmorenogit.github.io/Ironhack-GameProject-PigRadiusWars
-- **GitHub Repository:** https://github.com/MiguelMorenoGit/Ironhack-Module1-GameProject
+- **GitHub Repository:** https://github.com/MiguelMorenoGit/Ironhack-GameProject-PigRadiusWars
 
 ---
 
