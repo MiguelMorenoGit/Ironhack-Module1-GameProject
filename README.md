@@ -16,6 +16,22 @@ In the game, you control a flying pig equipped for battle, fighting to survive i
 
 ---
 
+## Screenshots
+
+<p align="center">
+  <img src="./images/readme/Pig%20Radius%20Wars%20-%20SplashScreen.png" width="700" alt="Pig Radius Wars Splash Screen">
+</p>
+
+<p align="center">
+  <img src="./images/readme/Pig%20Radius%20Wars%20-%20Game%20Screen.png" width="700" alt="Pig Radius Wars Game Screen">
+</p>
+
+<p align="center">
+  <img src="./images/readme/Pig%20Radius%20Wars%20-%20GameOver%20Screen.png" width="700" alt="Pig Radius Wars Game Over Screen">
+</p>
+
+---
+
 ## About the Project
 
 This project was built as a browser game to strengthen core front-end and game development skills, with a focus on:
