@@ -49,6 +49,16 @@ const main = ()=>{
     currentBackground = null;
   };
 
+  const playSound = (sound, volume = 1, timeout = 0) => {
+
+    setTimeout(() => {
+      const soundClone = sound.cloneNode();
+      soundClone.volume = volume;
+      soundClone.play();
+    }, timeout);
+   
+  }
+
   const buildSplashScreen = ()=>{
 
     stopCurrentScene(); // Detenemos cualquier juego o fondo que estuviera activo antes de construir la pantalla de inicio  
@@ -63,9 +73,9 @@ const main = ()=>{
         <button>Press for Play</button>
       </div>
       <canvas class="background-splash"></canvas> 
-      <audio volume="0.5" autoplay  loop>
-      <source src="./sonidos/D1 - Go Straight (Original Version)-[AudioTrimmer.com].mp3">
-      <audio> 
+      <audio volume="0.1" autoplay loop>
+            <source src="./sonidos/D1 - Go Straight (Original Version)-[AudioTrimmer.com].mp3">
+      </audio>
     </section>
     `);
 
@@ -80,8 +90,12 @@ const main = ()=>{
     
     // Botón para iniciar el juego, al hacer click se construye la pantalla del juego
     const startButton = document.querySelector('button'); 
-    startButton.addEventListener('click',buildGameScreen); // Al hacer click en el botón, construimos la pantalla del juego
-    
+    startButton.addEventListener('click',
+      ()=> {
+        playSound(new Audio('./sonidos/Laser-Shoot-Button.wav'), 1); // Sonido al hacer click en el botón de inicio
+        setTimeout(buildGameScreen, 300); // Al hacer click en el botón, construimos la pantalla del juego
+      });
+
     // Guardamos la referencia real del fondo actual */
     currentBackground = new Background(canvasElement);
     currentBackground.startLoop();
@@ -115,9 +129,9 @@ const main = ()=>{
             </div>
           </section>
 
-          <audio volume="0.3" autoplay loop>
+          <audio volume="0.2" autoplay loop>
             <source src="./sonidos/D1 - Go Straight (Original Version)-[AudioTrimmer.com].mp3">
-          <audio>
+          </audio>
         </section>
       </div>
 

@@ -26,6 +26,7 @@ class Game {
     // this.gameSound= new Audio ("./sonidos/D1 - Go Straight (Original Version)-[AudioTrimmer.com].mp3");
     // this.windSound = new Audio ("./sonidos/viento_en_un_canaveral_de_un_parque_1.mp3");
     this.enemySound = new Audio ("./sonidos/wreee.mp3");
+    this.explosionSound = new Audio ("./sonidos/Short-Explosion.wav");
     this.noEnemies = false;
     //this.finalScore = 0;
     this.animationId = null; // Para guardar el ID de la animación y poder cancelarla si es necesario
@@ -178,6 +179,9 @@ class Game {
 
         if (hasRecieveDamage) {
           this.explosions.push(new Explosion (this.canvas,enemy.x,enemy.y, 2, 356));
+          
+          this.playSound(this.explosionSound, 0.9);
+
           this.enemieChargerArray.splice(indexEnemy, 1);
 
           if (this.player.lives === 0) {
@@ -196,7 +200,10 @@ class Game {
           this.explosions.push(new Explosion (this.canvas,shoot.x,shoot.y, 30, 220));
           this.shoots.splice(index,1);
           this.enemieChargerArray.splice(indexEnemy,1);
-          this.enemySound.currentTime =0;this.enemySound.play();this.enemySound.volume = 0.3;
+
+          this.playSound(this.enemySound, 0.4);
+          this.playSound(this.explosionSound, 0.7, 75);
+
           this.player.updateScore(true);
           this.speedGame = this.speedGame+this.speedIncrease;
           this.enemieChargerArray.forEach((e,indexe)=>{
@@ -249,6 +256,17 @@ class Game {
   //   this.animationId = null; // Para guardar el ID de la animación y poder cancelarla si es necesari0
 
   // }
+
+  // Sirve para reproducir cualquier sonido con un volumen específico, evitando que se corten si se reproducen varias veces seguidas.
+  playSound (sound, volume = 1, timeout = 0){
+
+    setTimeout(() => {
+      const soundClone = sound.cloneNode();
+      soundClone.volume = volume;
+      soundClone.play();
+    }, timeout);
+   
+  }
 
   gameOverCallback(callback){
     this.onGameOver = callback;

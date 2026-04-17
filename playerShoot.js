@@ -42,6 +42,7 @@ class PlayerShoot {
     //------------SONIDO----------------
     const laserSound = new Audio('./sonidos/laser.mp3');
     laserSound.play();
+    laserSound.volume = 0.7;
   };
 
   update() {
