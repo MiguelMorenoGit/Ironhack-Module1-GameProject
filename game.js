@@ -19,10 +19,10 @@ class Game {
     this.isGameOver = false;
     this.onGameOver = null;
     this.updateScoreInMain = callbackScore;
-    this.speedIncrease = 0.04;
+    this.speedIncrease = 0.05;
     this.speedGame = 3;
-    this.enemyIncrease = -0.0001;
-    this.enemyCount = 0.98;
+    this.enemyIncrease = -0.0003;
+    this.enemyCount = 0.90;
     // this.gameSound= new Audio ("./sonidos/D1 - Go Straight (Original Version)-[AudioTrimmer.com].mp3");
     // this.windSound = new Audio ("./sonidos/viento_en_un_canaveral_de_un_parque_1.mp3");
     this.enemySound = new Audio ("./sonidos/wreee.mp3");
