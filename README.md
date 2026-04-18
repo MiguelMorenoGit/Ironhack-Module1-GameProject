@@ -134,7 +134,7 @@ During development, I iterated on several areas to improve the quality and polis
 **Miguel Ángel Moreno**
 
 - **GitHub:** https://github.com/MiguelMorenoGit
-- **LinkedIn:** ADD_YOUR_LINKEDIN_HERE
+- **LinkedIn:** https://www.linkedin.com/in/miguelangelmoreno-gamedev
 
 ---
 
