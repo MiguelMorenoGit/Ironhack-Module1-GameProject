@@ -156,6 +156,8 @@ class Game {
   }
 
   checkAllCollisions(){
+
+    if (this.isGameOver) return;
     
     this.player.checkScreen();
 
@@ -204,7 +206,7 @@ class Game {
           this.playSound(this.enemySound, 0.4);
           this.playSound(this.explosionSound, 0.7, 75);
 
-          this.player.updateScore(true);
+          if(!this.isGameOver)this.player.updateScore(true);
           this.speedGame = this.speedGame+this.speedIncrease;
           this.enemieChargerArray.forEach((e,indexe)=>{
               e.updateSpeed(this.speedIncrease);            

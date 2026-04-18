@@ -83,7 +83,7 @@ class Player {
   updateScore (isShoot) {
     
     if(isShoot === true)this.score = this.score + 100; // Si el disparo ha acertado, suma puntos 
-    else this.score = this.score - 20; // Si falla, resta puntos
+    //else this.score = this.score - 20; // Si falla, resta puntos
     
     if (this.score < 0) this.score = 0; // Evita que la puntuación baje de 0
   };
